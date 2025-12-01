@@ -1,0 +1,413 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+/* league sparton  */
+@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Chewy&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap");
+
+/* Yeseva One  */
+
+/* telegraph font  */
+
+@font-face {
+    font-family: telegraph;
+    src: url(../fonts/telegraph.otf);
+}
+@font-face {
+    font-family: futura;
+    src: url(../fonts/UTM_Futuraf.ttf);
+}
+@font-face {
+    font-family: london;
+    src: url(../fonts/Loudon-yla5.ttf);
+}
+@font-face {
+    font-family: lovelo;
+    src: url(../fonts/LoveloBlack.otf);
+}
+@font-face {
+    font-family: glamour;
+    src: url(../fonts/GlamourAbsoluteCondensed.woff2);
+}
+@font-face {
+    font-family: etna;
+    src: url(../fonts/etna-free-font.otf);
+}
+@font-face {
+    font-family: copper;
+    src: url(../fonts/Copperplate-Gothic-Std-31-AB.ttf);
+}
+
+@import "tailwindcss";
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --breakpoint-*: initial;
+    --breakpoint-xs: 100%;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --breakpoint-2xl: 1400px;
+    --breakpoint-3xl: 1700px;
+
+    --container-*: initial;
+    --container-xs: 100%;
+    --container-sm: 540px;
+    --container-md: 720px;
+    --container-lg: 960px;
+    --container-xl: 1140px;
+    --container-2xl: 1750px;
+    /* --container-3xl: 1750px; */
+
+    /* Adding custom font families */
+    --font-anton: "anton", sans-serif;
+    --font-abril: "Abril Fatface", serif;
+    --font-leagueSparton: "League Spartan", sans-serif;
+    --font-yesevaOne: "Yeseva One", serif;
+    --font-chewy: "Chewy", system-ui;
+    --font-quicksand: "Quicksand", sans-serif;
+    --font-mont: "Montserrat", sans-serif;
+    --font-telegraph: telegraph, sans-serif;
+    --font-futura: futura, sans-serif;
+    --font-london: london, sans-serif;
+    --font-lovelo: lovelo, sans-serif;
+    --font-lovelo: lovelo, sans-serif;
+    --font-glamour: glamour, sans-serif;
+    --font-etna: etna, sans-serif;
+    --font-copper: copper, sans-serif;
+
+    /* Adding custom colors */
+    --color-red: #e65237;
+    --color-yellow: #ffdd55;
+    --color-dark1: #37352b;
+    --color-dark2: #28261e;
+    --color-cream: #fffbed;
+    --color-gray: #ded8c6;
+}
+/* In your global.css file or equivalent */
+@layer base {
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+}
+html,
+body {
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    box-sizing: border-box;
+
+    /* font-family: "Montserrat", sans-serif; */
+    /* font-size: 18px; */
+}
+/* 
+
+  font-family: "Manrope", sans-serif;
+
+  font-family: "Vidaloka", serif; 
+
+*/
+
+h1,
+h2,
+h4,
+h5,
+h3,
+h6 {
+    font-family: "Montserrat", sans-serif;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+a {
+    text-decoration: none;
+}
+.bg-nav-gradient {
+    background: linear-gradient(
+            0deg,
+            rgba(215, 215, 215, 0.2) 0%,
+            rgba(215, 215, 215, 0.2) 100%
+        ),
+        var(--color-dark1);
+}
+.bg-nav-gradient:hover {
+    background-color: var(--color-dark1);
+}
+@media only screen and (min-width: 1401px) {
+    .custom-order-banner {
+        background-color: #28261e;
+        background-image: url("/build/assets/custom_order_section.png");
+        background-position: top left;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+}
+@media only screen and (min-width: 1200px) and (max-width: 1400px) {
+    .custom-order-banner {
+        background-color: #28261e;
+        background-image: url("/build/assets/custom_order_section.png");
+        background-position: top left;
+        background-size: 70% 75%;
+        background-repeat: no-repeat;
+    }
+}
+@media (max-width: 768px) {
+    .custom-order-banner {
+        background-color: #28261e;
+        background-image: url("/build/assets/custom_order_section.png");
+        background-position: bottom center;
+        background-size: 100%;
+        background-repeat: no-repeat;
+        /* background-attachment: scroll; */
+    }
+}
+@media (min-width: 769px) {
+    .custom-order-banner {
+        /* Use background-color as a fallback */
+        background-color: #28261e;
+
+        /* Define background with multiple layers */
+        background-image: linear-gradient(
+                107deg,
+                rgba(40, 38, 30, 0) 32.08%,
+                rgba(40, 38, 30, 0.88) 58.7%,
+                #28261e 72.21%
+            ),
+            url("/build/assets/custom_order_section.png");
+
+        /* Specify background properties for the image layer */
+        background-position: -78.117px 159.681px;
+        background-repeat: no-repeat;
+        /* background-attachment: fixed; */
+    }
+}
+
+.slick-thumbnail {
+    border: 2px solid transparent;
+    transition: border 0.3s ease;
+}
+.slick-current .slick-thumbnail {
+    border: 2px solid white;
+}
+
+.slick-slide img {
+    width: 100%;
+    height: 100%;
+}
+.react-tabs__tab--selected {
+    background: none !important;
+    color: var(--color-yellow) !important;
+    font-weight: bold !important;
+    position: relative;
+    border: none !important;
+    border-color: transparent;
+}
+.react-tabs__tab--selected:focus {
+    outline: none;
+    border: 0;
+    box-sizing: border-box;
+}
+
+.react-tabs__tab--selected::after {
+    content: "";
+    background: var(--color-red) !important;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: absolute;
+    top: 66px;
+    left: 50%;
+    outline: none;
+    border: 0;
+    box-sizing: border-box;
+}
+
+@media (max-width: 576px) {
+    .react-tabs__tab--selected::after {
+        left: -35px;
+        top: 5px;
+        width: 17px;
+        height: 17px;
+    }
+}
+
+.story-script-regular {
+    font-family: "Story Script", sans-serif;
+}
+
+.monsieur-la-doulaise-regular {
+    font-family: "Monsieur La Doulaise", cursive;
+}
+
+.michroma-regular {
+    font-family: "Michroma", sans-serif;
+}
+/* src/Shop.css */
+.custom-slider .rc-slider-rail {
+    @apply bg-gray-200 h-1;
+}
+.custom-slider .rc-slider-track {
+    @apply bg-red h-1;
+}
+.custom-slider .rc-slider-handle {
+    @apply bg-cream   w-4 h-4 rounded-full cursor-pointer;
+}
+.custom-slider .rc-slider-handle-dragging {
+    @apply ring-2 ring-blue-300;
+}
+.custom-slider .rc-slider-mark-text {
+    @apply text-gray-600 text-xs mt-1;
+}
+
+.react-modal-overlay {
+    z-index: 999 !important;
+}
+.react-modal__content {
+    z-index: 1001 !important;
+}
+
+.skeleton {
+    background: #333;
+    border-radius: 4px;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Skeleton loader styles */
+.skeleton-card {
+    background: #fff; /* Adjust based on your theme */
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+}
+
+.skeleton-image {
+    width: 100%;
+    height: 200px; /* Adjust based on your ProductCardTwo image size */
+    margin-bottom: 12px;
+}
+
+.skeleton-title {
+    width: 60%;
+    height: 20px;
+    margin-bottom: 8px;
+}
+
+.skeleton-price {
+    width: 40%;
+    height: 16px;
+    margin-bottom: 8px;
+}
+
+.skeleton-description {
+    width: 80%;
+    height: 14px;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scaleY(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scaleY(1);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.error-message {
+    padding: 20px;
+    background: #ffe6e6;
+    border-radius: 8px;
+    text-align: center;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #ffffff inset !important;
+    -webkit-text-fill-color: #000000 !important;
+}
+.swiper-button-prev,
+.swiper-button-next {
+    display: none;
+}

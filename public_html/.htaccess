@@ -1,0 +1,115 @@
+# ===================================================================
+# Laravel + React (Vite) + API - cPanel Ready .htaccess
+# Location: /public_html/.htaccess
+# ===================================================================
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # ------------------------------------------------------------------
+    # 1. Handle Authorization Header (Bearer Token, Sanctum, etc.)
+    # ------------------------------------------------------------------
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # ------------------------------------------------------------------
+    # 2. Redirect Trailing Slashes (SEO Friendly)
+    # ------------------------------------------------------------------
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # ------------------------------------------------------------------
+    # 3. Serve Static Files First (JS, CSS, Images, Build Assets)
+    # ------------------------------------------------------------------
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^ - [L]
+
+    # ------------------------------------------------------------------
+    # 4. API Routes → Laravel (POST, GET, PUT, DELETE, PATCH)
+    # ------------------------------------------------------------------
+    RewriteCond %{REQUEST_URI} ^/api [NC]
+    RewriteRule ^ index.php [L]
+
+    # ------------------------------------------------------------------
+    # 5. React SPA Routes → fallback to index.html (except API & files)
+    # ------------------------------------------------------------------
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !^/api [NC]
+    RewriteRule ^ index.html [L]
+
+    # ------------------------------------------------------------------
+    # 6. All Other Routes → Laravel (fallback)
+    # ------------------------------------------------------------------
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# ===================================================================
+# Security Headers (XSS, Clickjacking, MIME Sniffing)
+# ===================================================================
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:;"
+</IfModule>
+
+# ===================================================================
+# Gzip Compression (Speed Boost)
+# ===================================================================
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
+</IfModule>
+
+# ===================================================================
+# Browser Caching (1 Year for Build Assets)
+# ===================================================================
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 month"
+
+    # CSS & JS (Vite build)
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType application/x-javascript "access plus 1 year"
+
+    # Images
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+
+    # Fonts
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/otf "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType application/font-woff "access plus 1 year"
+</IfModule>
+
+# ===================================================================
+# Prevent Directory Listing
+# ===================================================================
+Options -Indexes
+
+# ===================================================================
+# End of .htaccess
+# ===================================================================
