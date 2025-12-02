@@ -38,7 +38,7 @@ const ProductCardTwo = ({ product }) => {
     };
 
     return (
-        <div className="w-full mx-auto transition-all duration-500 overflow-hidden hover:-translate-y-1 relative">
+        <div className="w-full  mx-auto transition-all duration-500 overflow-hidden hover:-translate-y-1 relative">
             {/* Out of Stock Badge - সবসময় দেখাবে যদি স্টক না থাকে */}
             {isOutOfStock && (
                 <div className="absolute top-3 left-3 z-10 bg-red text-cream text-xs font-mont font-semibold px-3 py-1 rounded-full shadow-lg">
@@ -80,7 +80,7 @@ const ProductCardTwo = ({ product }) => {
                                 <button
                                     onClick={handleAddToCart}
                                     disabled={isLoading}
-                                    className={`w-full flex justify-between items-center text-[12px] md:text-[18px] border border-transparent hover:border-cream rounded-[10px] text-cream mb-4 px-4 py-2 md:px-[30px] md:py-[15px] cursor-pointer ${
+                                    className={`w-full flex justify-between items-center text-[10px] md:text-[14px] border border-transparent hover:border-cream rounded-[10px] text-cream mb-4 px-4 py-2 md:px-5 md:py-2.5 cursor-pointer ${
                                         isLoading ? "bg-gray-500" : "bg-red"
                                     }`}
                                 >
@@ -92,7 +92,7 @@ const ProductCardTwo = ({ product }) => {
                             ) : (
                                 <Link
                                     to={`/product-details/${product?.slug}`}
-                                    className="w-full flex justify-between font-mont items-center text-[12px] md:text-[18px] bg-red border border-transparent hover:border-cream rounded-[10px] text-cream mb-4 px-4 py-2 md:px-[30px] md:py-[15px]"
+                                    className="w-full flex justify-between font-mont items-center text-[12px] md:text-[14px] bg-red border border-transparent hover:border-cream rounded-[10px] text-cream mb-4 px-4 py-2 md:px-2.5 md:py-[7px]"
                                 >
                                     Select Option
                                     <span>
@@ -103,7 +103,7 @@ const ProductCardTwo = ({ product }) => {
 
                             <Link
                                 to={`/product-details/${product?.slug}`}
-                                className="w-full flex justify-between font-mont items-center text-[12px] md:text-[18px] bg-dark2 border border-transparent hover:border-cream rounded-[10px] text-cream mb-4 px-4 py-2 md:px-[30px] md:py-[15px]"
+                                className="w-full flex justify-between font-mont items-center text-[12px] md:text-[14px] bg-dark2 border border-transparent hover:border-cream rounded-[10px] text-cream mb-4 px-4 py-2 md:px-5 md:py-2.5"
                             >
                                 Details
                                 <span>

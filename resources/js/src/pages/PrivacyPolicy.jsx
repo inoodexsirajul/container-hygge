@@ -5,14 +5,14 @@ import { FaShieldAlt, FaCookieBite, FaLock, FaHeart } from "react-icons/fa";
 const PrivacyPolicy = () => {
     return (
         <div className="min-h-screen bg-dark1 py-20 ">
-            <div className="container mx-auto px-4 2xl:px-20">
+            <div className="max-w-[1200px] mx-auto px-4 2xl:px-20">
                 <div className="max-w-4xl mx-auto">
                     {/* Header */}
                     <div className="text-center mb-16">
-                        <h1 className="text-3xl lg:text-4xl font-bold text-cream mb-6">
+                        <h1 className="text-3xl lg:text-3xl font-bold text-cream mb-6">
                             Privacy & Cookies Policy
                         </h1>
-                        <p className="text-md lg:text-xl text-gray">
+                        <p className="text-sm text-gray">
                             Your trust means everything to us ♡
                         </p>
                     </div>
@@ -26,10 +26,10 @@ const PrivacyPolicy = () => {
                                     <FaShieldAlt className="text-3xl text-gray" />
                                 </div>
                                 <div>
-                                    <h2 className="text-3xl font-bold text-cream mb-4">
+                                    <h2 className="text-2xl font-bold text-cream mb-4">
                                         Your Privacy is Sacred
                                     </h2>
-                                    <p className="text-lg text-gray leading-relaxed">
+                                    <p className="text-sm text-gray leading-relaxed">
                                         We collect and process{" "}
                                         <strong>
                                             only the information necessary
@@ -76,7 +76,7 @@ const PrivacyPolicy = () => {
                                     <FaCookieBite className="text-3xl text-cream" />
                                 </div>
                                 <div>
-                                    <h2 className="text-3xl font-bold text-cream mb-4">
+                                    <h2 className="text-2xl font-bold text-cream mb-4">
                                         Cookies & Ads
                                     </h2>
                                     <p className="text-lg text-gray leading-relaxed mb-6">

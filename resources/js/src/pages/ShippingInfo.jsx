@@ -11,11 +11,11 @@ import {
 const ShippingInfo = () => {
     return (
         <div className="min-h-screen bg-dark1 py-20 ">
-            <div className="container mx-auto px-4 2xl:px-20">
+            <div className="max-w-[1200px] mx-auto px-4 2xl:px-20">
                 <div className="max-w-4xl mx-auto">
                     {/* Header */}
                     <div className="text-center mb-16">
-                        <h1 className="text-xl lg:text-4xl font-bold text-cream mb-4">
+                        <h1 className="text-xl lg:text-3xl font-bold text-cream mb-4">
                             Shipping Information
                         </h1>
                         <p className="text-sm lg:text-xl text-gray">
@@ -62,7 +62,7 @@ const ShippingInfo = () => {
                                             Orders are processed within{" "}
                                             <strong>3–7 business days</strong>.
                                             <br />
-                                            <span className="text-sm text-gray-600">
+                                            <span className="text-sm text-gray">
                                                 (Custom orders may take a little
                                                 longer — worth the wait!)
                                             </span>

@@ -258,7 +258,7 @@ const Shop = () => {
 
     return (
         <div className="bg-dark1  ]">
-            <div className="px-4 xl:px-20 container mx-auto pb-[140px ">
+            <div className="px-4 xl:px-20 max-w-[1200px] mx-auto pb-[140px ">
                 {/* Breadcrumb */}
                 <div className=" py-4 lg:py-[47px]">
                     <ul className="flex justify-end gap-4">
@@ -288,7 +288,7 @@ const Shop = () => {
 
                     {/* Sidebar */}
                     <div
-                        className={`fixed top-0 left-0 h-full w-full max-w-[350px] bg-dark1 z-50 transition-transform duration-300 ease-in-out xl:static xl:z-0 xl:translate-x-0 ${
+                        className={`fixed top-0 left-0 h-full w-full max-w-[300px] bg-dark1 z-50 transition-transform duration-300 ease-in-out xl:static xl:z-0 xl:translate-x-0 ${
                             filter ? "translate-x-0" : "-translate-x-full"
                         }`}
                     >
@@ -451,7 +451,7 @@ const Shop = () => {
                                                 onClick={() =>
                                                     toggleSize(size.id)
                                                 }
-                                                className={`px-5 py-2 rounded-md font-semibold text-sm transition-all shadow-md ${
+                                                className={`px-4 py-2 rounded-md font-semibold text-sm transition-all shadow-md ${
                                                     isSelected
                                                         ? "bg-cream text-black"
                                                         : "bg-dark3 text-cream border border-gray-600 hover:border-cream"
@@ -465,7 +465,7 @@ const Shop = () => {
                             </div>
 
                             {/* Price Range */}
-                            <div className="mb-8 pr-5">
+                            <div className="mb-8 pr-10 ml-2">
                                 <h4 className="font-semibold text-cream mb-3">
                                     Price Range
                                 </h4>
@@ -514,7 +514,7 @@ const Shop = () => {
                             </select>
                         </div>
 
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 2xl:grid-cols-4 gap-4 px-4 xl:px-0">
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4 px-4 xl:px-0">
                             {allLoading ? (
                                 Array(12)
                                     .fill()

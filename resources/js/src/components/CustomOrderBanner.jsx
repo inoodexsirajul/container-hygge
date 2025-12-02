@@ -5,9 +5,9 @@ import { Link } from "react-router";
 const CustomOrderBanner = () => {
     return (
         <div className="custom-order-banner  pt-[86px] lg:pt-[150px] 3xl:pt-[266px] pb-[200px] lg:pb-[150px] 3xl:pb-[277px]">
-            <div className="px-5 lg:px-20 container mx-auto">
-                <div className="w-full lg:w-1/2 ml-auto lg:pl-[65px] pb-[100px] lg:pb-0">
-                    <h2 className="text-[45px] text-center md:text-left font-mont 2xl:text-[45px] 3xl:text-[80px] text-yellow  leading-[45px] 2xl:leading-[55px] 3xl:leading-[100px] mb-11 ">
+            <div className="px-5 lg:px-20 max-w-[1200px] mx-auto">
+                <div className="w-full lg:w-1/2 ml-auto lg:pl-[30px] pb-[100px] lg:pb-0">
+                    <h2 className="text-[45px] text-center md:text-left font-mont 2xl:text-[45px] 3xl:text-[60px] text-yellow  leading-[45px] 2xl:leading-[55px] 3xl:leading-20 mb-11 ">
                         “A Personal Touch for Every Occasion”
                     </h2>
                     <div className="max-w-[490px]  ">

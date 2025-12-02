@@ -13,24 +13,19 @@ import {
 const HowToOrder = () => {
     return (
         <div className="min-h-screen bg-dark1 py-20 ">
-            <div className="container mx-auto px-4 2xl:px-20">
+            <div className="max-w-[1200px] mx-auto px-4 2xl:px-20">
                 <div className="max-w-6xl mx-auto">
-                    {/* Main Title */}
-                    <div className="text-center mb-16">
-                        <h1 className="text-xl lg:text-4xl font-bold text-cream mb-4">
-                            How It Works
-                        </h1>
-                        <p className="text-sm lg:text-lg text-gray">
-                            From idea to doorstep — simple, personal, and made
-                            with love ♡
-                        </p>
-                    </div>
-
                     {/* How to Order - 4 Steps */}
                     <section className="mb-20">
-                        <h2 className="text-4xl font-bold text-center mb-12 text-cream">
-                            How to Order
-                        </h2>
+                        <div className="text-center mb-8">
+                            <h2 className="text-4xl font-bold text-center mb-3 text-cream">
+                                How to Order
+                            </h2>
+                            <p className="text-sm lg:text-lg text-gray">
+                                From idea to doorstep — simple, personal, and
+                                made with love ♡
+                            </p>
+                        </div>
                         <div className="grid md:grid-cols-4 gap-8">
                             {[
                                 {
@@ -68,10 +63,10 @@ const HowToOrder = () => {
                                             {step.icon}
                                         </div>
                                     </div>
-                                    <h3 className="text-2xl font-bold text-cream mb-3">
+                                    <h3 className="text-xl font-bold text-cream mb-3">
                                         {step.title}
                                     </h3>
-                                    <p className="text-gray leading-rselaxed">
+                                    <p className="text-gray leading-rselaxed text-sm">
                                         {step.desc}
                                     </p>
                                 </div>
@@ -80,16 +75,16 @@ const HowToOrder = () => {
                     </section>
 
                     {/* Order Tracking */}
-                    <section className="mb-20 bg-dark2 rounded-3xl p-10 md:p-16">
+                    <section className="mb-4 bg-dark2 rounded-3xl p-10 md:p-16">
                         <div className="flex items-start gap-8 max-w-4xl mx-auto">
                             <div className="w-20 h-20 bg-gray rounded-full shrink-0 flex items-center justify-center shadow-xl">
                                 <FaMapMarkedAlt className="text-4xl text-dark2" />
                             </div>
                             <div>
-                                <h2 className="text-4xl font-bold text-cream mb-2">
+                                <h2 className="text-3xl font-bold text-cream mb-2">
                                     Order Tracking
                                 </h2>
-                                <p className="text-lg text-gray leading-relaxed">
+                                <p className="text-sm text-gray leading-relaxed">
                                     Once your order ships, you’ll receive an{" "}
                                     <strong>
                                         email with a tracking number
@@ -115,16 +110,13 @@ const HowToOrder = () => {
                                 <FaRulerCombined className="text-4xl text-dark2" />
                             </div>
                             <div>
-                                <h2 className="text-4xl font-bold text-cream mb-6">
+                                <h2 className="text-3xl font-bold text-cream mb-6">
                                     Size Guide
                                 </h2>
-                                <p className="text-lg text-gray leading-relaxed">
-                                    We want your products to fit{" "}
+                                <p className="text-sm text-gray leading-relaxed">
+                                    We want your products to fit
                                     <strong>perfectly</strong> — just like a
-                                    warm hug.
-                                    <br />
-                                    <br />
-                                    Check the{" "}
+                                    warm hug. Check the
                                     <strong>detailed size chart</strong> on each
                                     product page (all measurements in
                                     centimeters).

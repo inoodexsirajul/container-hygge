@@ -140,20 +140,20 @@ const Career = () => {
 
     return (
         <div className="flex min-h-screen w-full bg-dark1  relative">
-            <div className="container mx-auto px-4 xl:px-20">
-                <div className="w-full grid xl:grid-cols-2 gap-4 py-12">
+            <div className="max-w-[1200px] mx-auto px-4 xl:px-20">
+                <div className="w-full grid xl:grid-cols-5 gap-4 py-12">
                     {/* Left content  */}
-                    <div className="w-full max-w-md text-center xl:text-left mb-16 pt-20">
-                        <h1 className="text-5xl md:text-5xl font-bold text-white mb-8">
+                    <div className="col-span-2 w-full max-w-md text-center xl:text-left mb-16 pt-20">
+                        <h1 className="text-2xl md:text-4xl font-bold text-white mb-8">
                             Careers at{" "}
                             <span className="text-red">Hygge Cotton</span>
                         </h1>
-                        <p className="text-sm lg:text-lg text-cream leading-relaxed max-w-4xl mx-auto">
+                        <p className="text-sm lg:text-md text-cream leading-relaxed max-w-4xl mx-auto">
                             We're always looking for creative minds who share
                             our love for design, sustainability, and
                             craftsmanship.
                         </p>
-                        <p className="text-sm lg:text-lg text-gray-300 mt-4 max-w-3xl mx-auto">
+                        <p className="text-sm lg:text-md text-gray-300 mt-4 max-w-3xl mx-auto">
                             If you'd like to join our growing team in
                             Copenhagen, send your CV and a short introduction
                             to:
@@ -188,7 +188,7 @@ const Career = () => {
                     )}
 
                     {/* Form Card */}
-                    <div className="w-full bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/20 p-4 md:p-4">
+                    <div className="col-span-3 w-full bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/20 p-4 md:p-4">
                         <div className="text-center mb-4">
                             <h2 className="text-4xl md:text-3xl font-bold text-white mb-4">
                                 Join Our Team

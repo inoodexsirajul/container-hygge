@@ -191,7 +191,7 @@ const CheckoutPage = () => {
 
     return (
         <div className="min-h-screen bg-dark1 py-12">
-            <div className="container mx-auto px-4   2xl:px-20">
+            <div className="max-w-[1200px] mx-auto px-4   2xl:px-20">
                 <h1 className="text-3xl font-bold text-cream mb-8">Checkout</h1>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

@@ -8,7 +8,7 @@ const RecomendedSection = () => {
     const { data, error, isLoading } = useGetProductsByTypeQuery();
 
     return (
-        <div className="pt-[19px] pb-[33px] lg:pt-[125px] lg:pb-[100px] bg-dark2 ">
+        <div className="pt-[19px] pb-[33px] lg:pt-17 lg:pb-17 bg-dark1 ">
             <div className="px-[18px]   lg:px-20  max-w-[1200px] mx-auto">
                 <div className="mb-5">
                     <SectionTitle

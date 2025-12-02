@@ -11,7 +11,7 @@ import {
 const LegalNotice = () => {
     return (
         <div className="min-h-screen bg-dark1 py-20 ">
-            <div className="container mx-auto px-4 2xl:px-20">
+            <div className="max-w-[1200px] mx-auto px-4 2xl:px-20">
                 <div className="max-w-4xl mx-auto">
                     {/* Header */}
                     <div className="text-center mb-16">
@@ -32,17 +32,17 @@ const LegalNotice = () => {
                                     <FaCopyright className="text-3xl text-cream" />
                                 </div>
                                 <div>
-                                    <h2 className="text-xl lg:text-3xl font-bold text-cream mb-6">
+                                    <h2 className="text-xl lg:text-2xl font-bold text-cream mb-6">
                                         Copyright & Intellectual Property
                                     </h2>
-                                    <p className="text-lg text-gray leading-relaxed">
+                                    <p className="text-sm text-gray leading-relaxed">
                                         All images, designs, logos, text, and
                                         content on this website are the
                                         exclusive property of{" "}
                                         <strong>Hygge Cotton</strong> or its
                                         licensors.
                                     </p>
-                                    <p className="text-lg text-gray mt-6 leading-relaxed">
+                                    <p className="text-sm text-gray mt-6 leading-relaxed">
                                         Unauthorized reproduction, distribution,
                                         modification, or use of any material
                                         from this website is{" "}
@@ -56,7 +56,7 @@ const LegalNotice = () => {
 
                         {/* Company Details */}
                         <div className="p-12 md:p-16 bg-dark1">
-                            <h2 className="text-lg lg:text-3xl  font-bold text-cream mb-10 flex items-center gap-4">
+                            <h2 className="text-lg lg:text-2xl  font-bold text-cream mb-10 flex items-center gap-4">
                                 <FaShieldAlt
                                     className="text-3xl text-cream "
                                     size={40}

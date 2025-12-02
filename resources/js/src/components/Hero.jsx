@@ -46,13 +46,13 @@ const Hero = () => {
                 {sliderData?.sliders?.map((slide) => (
                     <SwiperSlide key={slide.id}>
                         <div className="px-4 sm:px-6 lg:px-10 xl:px-20 max-w-[1200px] mx-auto">
-                            <div className="grid grid-cols-1 lg:grid-cols-2 items-center py-8 sm:py-12 lg:py-[40px] gap-6">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 items-center py-8 sm:py-12 lg:py-4 2xl:py-10 gap-6">
                                 <div className="w-full flex justify-center items-center order-2 lg:order-1">
                                     <img
                                         src={slide.banner && `/${slide.banner}`}
                                         alt={slide.title}
                                         loading="lazy"
-                                        className="w-full max-w-[300px] sm:max-w-[400px] lg:max-w-[500px] xl:w-full xl:max-w-[400px] object-contain"
+                                        className="w-full max-w-[300px] sm:max-w-[400px] lg:w-full lg:max-w-[300px] xl:w-full 2xl:max-w-[400px] object-contain"
                                     />
                                 </div>
                                 <div className="w-full order-1 lg:order-2 text-center lg:text-left px-4 sm:px-6 lg:px-0">

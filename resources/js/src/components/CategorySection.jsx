@@ -6,9 +6,7 @@ const CategorySection = ({ categoryId, products, index, categorySlug }) => {
     const bgClass = index % 2 === 0 ? "bg-dark1" : "bg-dark2";
     const dynamicBtnUrl = `/shop/?category_ids[]=${categoryId}`;
     return (
-        <div
-            className={` pt-[19px] lg:pt-[125px] pb-[33px] lg:pb-[100px] ${bgClass} `}
-        >
+        <div className={` pt-[19px] lg:pt-17 pb-[33px] lg:pb-17 ${bgClass} `}>
             <div className="px-[18px] lg:px-20 max-w-[1200px] mx-auto">
                 <div className="mb-5">
                     <SectionTitle

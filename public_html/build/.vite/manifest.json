@@ -20,7 +20,7 @@
     "src": "node_modules/slick-carousel/slick/fonts/slick.woff"
   },
   "resources/css/app.css": {
-    "file": "assets/app-ewzIkwY-.css",
+    "file": "assets/app-mz9nWKZh.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -53,7 +53,7 @@
     "src": "resources/fonts/telegraph.otf"
   },
   "resources/js/app.jsx": {
-    "file": "assets/app-B_2VSj4s.js",
+    "file": "assets/app-BZLdUZWo.js",
     "name": "app",
     "src": "resources/js/app.jsx",
     "isEntry": true,

@@ -207,7 +207,7 @@ const ProductDetails = () => {
 
     return (
         <div className="bg-dark2">
-            <div className="px-5 2xl:px-20 py-10 container mx-auto">
+            <div className="px-5 2xl:px-20 py-10 max-w-[1200px] mx-auto">
                 {isLoading && renderSkeleton()}
                 {error && (
                     <p className="text-red-500 text-center">
@@ -218,7 +218,7 @@ const ProductDetails = () => {
                 )}
 
                 {!isLoading && !error && product && (
-                    <div className="pt-[5px] grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-[50px] 2xl:gap-[156px]">
+                    <div className="pt-[5px] grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-[50px] 2xl:gap-[30px]">
                         {/* Image Gallery */}
                         <div className="grid grid-cols-3 gap-2.5 md:gap-5">
                             {/* Thumbnails - এখন স্লাইড + ক্লিক + সিঙ্ক করবে */}
@@ -304,30 +304,30 @@ const ProductDetails = () => {
 
                         {/* Product Info - ডিজাইন ১০০% অপরিবর্তিত */}
                         <div className="w-full">
-                            <div className="pt-[15px] mb-4 3xl:mb-[38px]">
+                            <div className="pt-[15px] mb-4 3xl:mb-3">
                                 <ul className="flex items-center gap-3">
                                     <li>
                                         <Link
                                             to="/"
-                                            className="text-cream text-sm md:text-[18px] font-normal font-mont"
+                                            className="text-cream text-sm font-normal font-mont"
                                         >
                                             Home
                                         </Link>
                                     </li>
-                                    <li className="text-cream text-sm md:text-[18px] font-normal">
+                                    <li className="text-cream text-sm   font-normal">
                                         /
                                     </li>
-                                    <li className="text-cream text-[14px] md:text-[18px] font-normal capitalize font-mont">
+                                    <li className="text-cream  text-sm font-normal capitalize font-mont">
                                         {pathName}
                                     </li>
                                 </ul>
                             </div>
 
-                            <h2 className="text-yellow text-[35px] xl:text-[46px] font-normal mb-3 font-mont">
+                            <h2 className="text-yellow text-2xl font-medium mb-3 font-mont">
                                 {product.name}
                             </h2>
 
-                            <div className="mb-4 3xl:mb-[30px]">
+                            <div className="mb-4 2xl:mb-4">
                                 <Rating
                                     initialRating={
                                         product.reviews_avg_rating || 0
@@ -342,26 +342,26 @@ const ProductDetails = () => {
                                 />
                             </div>
 
-                            <div className="flex gap-[30px] xl:gap-[60px] items-center mb-4 3xl:mb-[30px]">
-                                {/* মেইন প্রাইস — সবসময় totalPrice */}
-                                <p className="text-[16px] xl:text-[24px] text-cream font-bold font-mont">
+                            <div className="flex gap-[30px] xl:gap-[60px] items-center mb-4">
+                                {/*  totalPrice */}
+                                <p className="text-xl text-cream font-bold font-mont">
                                     ${totalPrice}
                                 </p>
 
-                                {/* লাইন-থ্রু — শুধু offer_price থাকলে এবং product.price দেখাবে */}
+                                {/* line through */}
                                 {product.offer_price &&
                                     !isNaN(Number(product.offer_price)) && (
-                                        <p className="text-[16px] xl:text-[24px] text-gray-500 line-through font-mont">
+                                        <p className="text-xl text-gray-500 line-through font-mont">
                                             ${Number(product.price)}
                                         </p>
                                     )}
                             </div>
 
-                            <p className="text-[16px] 3xl:text-[18px] text-cream mb-4 3xl:mb-[50px] font-mont">
+                            <p className="text-sm text-cream mb-4   font-mont">
                                 {product.short_description}
                             </p>
 
-                            <div className="flex flex-col md:flex-row gap-4 xl:gap-[46px] mb-[59px]">
+                            <div className="flex flex-col md:flex-row gap-4 xl:gap-[46px] mb-8">
                                 <div className="flex gap-4 xl:gap-[33px] items-center">
                                     <span className="text-[18px] text-cream bg-dark1 p-1 rounded-[5px] font-bold font-mont">
                                         Collection
@@ -390,19 +390,19 @@ const ProductDetails = () => {
                                     </span>
                                 </div>
                             </div>
-
-                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-4 xl:gap-10 3xl:gap-20 mb-[60px]">
-                                {/* Colors - এখন গ্যালারি থেকে */}
+                            {/* colors  */}
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-4 xl:gap-8 mb-[60px]">
+                                {/* Colors  */}
                                 <div className="w-full">
                                     <h5 className="font-manrope text-[18px] text-cream font-bold mb-[21px] leading-0 font-mont">
                                         Colors
                                     </h5>
                                     {galleryColors.length > 0 ? (
-                                        <div className="flex flex-wrap gap-2 xl:gap-[18px]">
+                                        <div className="flex flex-wrap gap-2 xl:gap-2  ">
                                             {galleryColors.map((color) => (
                                                 <div
                                                     key={color.id}
-                                                    className="relative"
+                                                    className="relative  "
                                                 >
                                                     <button
                                                         type="button"
@@ -414,12 +414,12 @@ const ProductDetails = () => {
                                                             )
                                                         }
                                                         className={`
-                                                        w-[30px] xl:w-[45px] h-[30px] xl:h-[45px] 
+                                                        w-[30px] xl:w-[35px] h-[30px] xl:h-[35px] 
                                                         rounded-[10px] border transition-all duration-200 font-mont
                                                         ${
                                                             selectedColor?.id ===
                                                             color.id
-                                                                ? "border-4 border-yellow scale-110 shadow-lg shadow-yellow/50"
+                                                                ? "border-4 border-cream scale-110  "
                                                                 : "border-2 border-gray-800 hover:border-gray-500"
                                                         }
                                                         ${
@@ -511,11 +511,11 @@ const ProductDetails = () => {
                                                             size.size_id
                                                         )
                                                     }
-                                                    className={`relative font-mont w-[30px] xl:w-[45px] h-[30px] xl:h-[45px] rounded-[10px] flex justify-center items-center font-bold text-sm xl:text-[14px] transition-all duration-200 ${
+                                                    className={`relative font-mont w-[30px] xl:w-[45px] h-[30px] xl:h-[45px] rounded-[7px] flex justify-center items-center font-bold text-sm xl:text-[14px] transition-all duration-200 ${
                                                         selectedSizeId ===
                                                         size.size_id
                                                             ? "bg-yellow text-dark2 border-2 border-yellow shadow-md scale-105"
-                                                            : "border-2 border-gray-800 text-cream hover:bg-gray-700"
+                                                            : "border-2 border-gray text-cream hover:bg-gray-700"
                                                     } ${
                                                         isOutOfStock
                                                             ? "opacity-60 cursor-not-allowed"
@@ -533,7 +533,7 @@ const ProductDetails = () => {
                                     )}
                                 </div>
                             </div>
-
+                            {/* product quantity         */}
                             <div className="flex flex-col sm:flex-row gap-4 md:gap-[47px]">
                                 <button
                                     type="button"
@@ -543,7 +543,7 @@ const ProductDetails = () => {
                                         isOutOfStock ||
                                         quantity > maxAvailableQty
                                     }
-                                    className={`flex items-center gap-2.5 font-semibold text-[16px] font-mont xl:text-[18px] text-cream rounded-[10px] py-2.5 xl:py-[30px] px-[30px] xl:px-[60px] cursor-pointer transition-all ${
+                                    className={`flex items-center gap-2.5 font-medium text-[16px] font-mont xl:text-sm text-cream text-center rounded-[10px] py-2 xl:py-2 px-8 cursor-pointer transition-all ${
                                         isOutOfStock ||
                                         quantity > maxAvailableQty
                                             ? "bg-gray-600 opacity-70 cursor-not-allowed"
@@ -568,7 +568,7 @@ const ProductDetails = () => {
                                 {product.customization && !isOutOfStock && (
                                     <button
                                         onClick={handleCustomizeClick}
-                                        className="flex items-center font-mont gap-2.5 font-semibold text-[18px] text-cream border border-cream rounded-[10px] py-2.5 xl:py-[30px] px-[30px] xl:px-[60px] cursor-pointer hover:bg-cream hover:text-dark2 transition-all"
+                                        className="flex items-center font-mont gap-2.5 font-medium text-sm text-cream border border-cream rounded-[10px] py-2.5 xl:py-4 px-[30px] xl:px-4 cursor-pointer hover:bg-cream hover:text-dark2 transition-all"
                                     >
                                         Customize <GoArrowRight />
                                     </button>

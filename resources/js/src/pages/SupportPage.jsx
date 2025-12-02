@@ -5,7 +5,7 @@ import { FaEnvelope, FaPhoneAlt, FaClock, FaRegHeart } from "react-icons/fa";
 const SupportPage = () => {
     return (
         <div className="min-h-screen bg-dark1 py-20 ">
-            <div className="container mx-auto px-6 2xl:px-20">
+            <div className="max-w-[1200px] mx-auto px-6 2xl:px-20">
                 <div className="max-w-4xl mx-auto">
                     {/* Header */}
                     <div className="text-center mb-16">

@@ -142,10 +142,10 @@ const Navbar = () => {
                                 <li className="relative group">
                                     <Link
                                         to="/shop"
-                                        className="px-4 py-2 text-cream hover:bg-nav-gradient rounded-[10px] font-mont cursor-pointer flex items-center  text-xs  uppercase"
+                                        className="px-4 py-2 text-cream hover:bg-nav-gradient rounded-[10px] font-mont cursor-pointer flex items-center  text-md  uppercase"
                                     >
                                         Our Products
-                                        <FaChevronDown className="ml-2 text-xs transition-transform group-hover:rotate-180" />
+                                        <FaChevronDown className="ml-2 text-sm transition-transform group-hover:rotate-180" />
                                     </Link>
 
                                     <div className="absolute top-full left-0 bg-cream w-[250px] p-4 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
@@ -280,7 +280,7 @@ const Navbar = () => {
                                         <li key={title}>
                                             <Link
                                                 to={`/${title.toLowerCase()}`}
-                                                className="px-4 py-2 text-cream hover:bg-nav-gradient font-mont rounded-[10px] text-xs"
+                                                className="px-4 py-2 text-cream hover:bg-nav-gradient font-mont rounded-[10px] text-md hover:text-red"
                                             >
                                                 {title}
                                             </Link>
@@ -310,7 +310,7 @@ const Navbar = () => {
                                         alt="Profile"
                                         className="w-8 h-8 rounded-full object-cover border border-cream"
                                     />
-                                    <span className="text-cream text-sm hidden sm:block font-mont">
+                                    <span className="text-cream text-md hidden sm:block font-mont">
                                         {user.data.name}
                                     </span>
                                 </div>
@@ -341,7 +341,7 @@ const Navbar = () => {
                                 )}
                             </li>
                         ) : (
-                            <li className="text-cream text-xs hidden lg:block font-mont">
+                            <li className="text-cream text-md hidden lg:block font-mont">
                                 <Link to="/signin">SIGN IN</Link>
                             </li>
                         )}

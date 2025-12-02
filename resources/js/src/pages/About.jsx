@@ -7,15 +7,15 @@ import founder from "../assets/founder.jpg";
 const About = () => {
     return (
         <div className="min-h-screen bg-dark1 text-dark2">
-            <div className="px-5 2xl:px-20 container mx-auto">
+            <div className="px-5 2xl:px-20 max-w-[1200px] mx-auto">
                 {/* Hero Section */}
                 <section className="relative py-24  overflow-hidden">
                     <div className="max-w-6xl mx-auto text-center">
-                        <h1 className="text-4xl text-cream md:text-6xl font-bold mb-6 leading-tight">
-                            Welcome to{" "}
+                        <h1 className="text-4xl text-cream  font-bold mb-6 leading-tight">
+                            Welcome to
                             <span className="text-cream">Hygge Cotton</span>
                         </h1>
-                        <p className="text-xl md:text-2xl text-gray max-w-xl mx-auto leading-relaxed">
+                        <p className="text-lg   text-gray max-w-md mx-auto leading-relaxed">
                             Where comfort meets conscience. Inspired by the
                             Danish art of living well —
                             <span className="font-medium text-red">hygge</span>{" "}
@@ -31,9 +31,9 @@ const About = () => {
 
                 {/* Our Story */}
                 <section className="py-20   bg-dark2">
-                    <div className="max-w-xl mx-auto   gap-12 items-center text-center">
+                    <div className="max-w-md mx-auto   gap-12 items-center text-center">
                         <div>
-                            <h2 className="text-3xl md:text-5xl font-bold mb-6 text-cream">
+                            <h2 className="text-3xl md:text-3xl font-bold mb-6 text-cream">
                                 Our Story
                             </h2>
                             <p className="text-lg leading-relaxed text-gray mb-6">
@@ -83,7 +83,7 @@ const About = () => {
                 {/* Philosophy Cards */}
                 <section className="py-20  ">
                     <div className="max-w-6xl mx-auto">
-                        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-cream">
+                        <h2 className="text-2xl md:text-3xl font-bold text-center mb-16 text-cream">
                             Our Philosophy
                         </h2>
                         <div className="grid md:grid-cols-3 gap-10">
@@ -182,10 +182,10 @@ const About = () => {
                 <section className="py-20 bg-dark2 text-cream">
                     <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16">
                         <div className="text-center md:text-left px-8">
-                            <h2 className="text-4xl md:text-5xl font-bold mb-8">
+                            <h2 className="text-4xl md:text-3xl font-bold mb-8">
                                 Our Mission
                             </h2>
-                            <p className="text-lg leading-relaxed opacity-90">
+                            <p className="text-md leading-relaxed opacity-90">
                                 To make comfort a part of everyday life —
                                 physically, emotionally, and ethically. We want
                                 every Hygge Cotton piece to feel like a warm hug
@@ -193,10 +193,10 @@ const About = () => {
                             </p>
                         </div>
                         <div className="text-center md:text-left px-8">
-                            <h2 className="text-4xl md:text-5xl font-bold mb-8">
+                            <h2 className="text-3xl md:text-3xl font-bold mb-8">
                                 Our Vision
                             </h2>
-                            <p className="text-lg leading-relaxed opacity-90">
+                            <p className="text-md leading-relaxed opacity-90">
                                 To become a globally trusted name for
                                 simplicity, sustainability, and soulful living —
                                 one soft, honest, beautiful product at a time.
