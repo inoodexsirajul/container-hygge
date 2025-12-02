@@ -23,7 +23,7 @@ const EssentialSection = () => {
                     {isLoading ? (
                         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-[20px]">
                             {/* Render 4 skeleton loaders to match the grid layout */}
-                            {Array(4)
+                            {Array(6)
                                 .fill()
                                 .map((_, index) => (
                                     <div
@@ -42,9 +42,9 @@ const EssentialSection = () => {
                             Error: {error.message}
                         </div>
                     ) : (
-                        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-6 gap-4 lg:gap-5">
+                        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 2xl:grid-cols-6 gap-4 lg:gap-5">
                             {data?.featuredProduct
-                                ?.slice(0, 8)
+                                ?.slice(0, 12)
                                 .map((product) => (
                                     <ProductCardTwo
                                         key={product.id}

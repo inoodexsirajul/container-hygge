@@ -18,10 +18,10 @@ const CategorySection = ({ categoryId, products, index, categorySlug }) => {
                 </div>
 
                 <div>
-                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 lg:gap-5">
+                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 lg:gap-5">
                         {products.products.length > 0 &&
                             products.products
-                                .slice(0, 5)
+                                .slice(0, 6)
                                 .map((product) => (
                                     <ProductCardTwo
                                         key={product.id}
