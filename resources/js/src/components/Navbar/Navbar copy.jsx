@@ -129,7 +129,7 @@ const Navbar = () => {
                                 <img
                                     src={`/${logoData.logo_fav.logo}`}
                                     alt="logo"
-                                    className={`w-8 sm:w-10 lg:w-12 ${
+                                    className={`w-10 sm:w-12 lg:w-16 ${
                                         isSticky ? "w-8" : ""
                                     }`}
                                 />
@@ -142,7 +142,7 @@ const Navbar = () => {
                                 <li className="relative group">
                                     <Link
                                         to="/shop"
-                                        className="px-4 py-2 text-cream hover:bg-nav-gradient rounded-[10px] font-mont cursor-pointer flex items-center  text-xs  uppercase"
+                                        className="px-4 py-2 text-cream hover:bg-nav-gradient rounded-[10px] font-mont cursor-pointer flex items-center text-md uppercase"
                                     >
                                         Our Products
                                         <FaChevronDown className="ml-2 text-xs transition-transform group-hover:rotate-180" />
@@ -280,7 +280,7 @@ const Navbar = () => {
                                         <li key={title}>
                                             <Link
                                                 to={`/${title.toLowerCase()}`}
-                                                className="px-4 py-2 text-cream hover:bg-nav-gradient font-mont rounded-[10px] text-xs"
+                                                className="px-4 py-2 text-cream hover:bg-nav-gradient font-mont rounded-[10px] text-md"
                                             >
                                                 {title}
                                             </Link>
@@ -341,14 +341,14 @@ const Navbar = () => {
                                 )}
                             </li>
                         ) : (
-                            <li className="text-cream text-xs hidden lg:block font-mont">
+                            <li className="text-cream text-sm hidden lg:block font-mont">
                                 <Link to="/signin">SIGN IN</Link>
                             </li>
                         )}
 
                         <li className="text-cream relative">
                             <Link to="/cart">
-                                <GrBasket size={35} />
+                                <GrBasket size={40} />
                                 {/* <MdOutlineShoppingBag size={40} /> */}
                                 {totalQuantity > 0 && (
                                     <div className="absolute -top-2 font-mont -right-2 w-5 h-5 rounded-full bg-red text-cream flex justify-center items-center text-xs">

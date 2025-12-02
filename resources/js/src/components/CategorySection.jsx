@@ -9,7 +9,7 @@ const CategorySection = ({ categoryId, products, index, categorySlug }) => {
         <div
             className={` pt-[19px] lg:pt-[125px] pb-[33px] lg:pb-[100px] ${bgClass} `}
         >
-            <div className="px-[18px] lg:px-20 container mx-auto">
+            <div className="px-[18px] lg:px-20 max-w-[1200px] mx-auto">
                 <div className="mb-5">
                     <SectionTitle
                         title={`${products?.name}`}

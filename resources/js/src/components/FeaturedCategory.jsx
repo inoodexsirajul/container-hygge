@@ -52,9 +52,9 @@ const FeaturedCategory = () => {
 
     return (
         // px-[18px] pt-[19px] lg:pt-[125px] pb-[33px] lg:pb-[100px] lg:px-20
-        <div className=" bg-dark2 pt-[19px]  ">
-            <div className="px-4 sm:px-6 lg:px-10 xl:px-20 container mx-auto relative">
-                <h2 className="text-3xl md:text-4xl font-bold text-cream text-center mb-12 tracking-wide font-mont">
+        <div className=" bg-dark2 pt-[30px]  ">
+            <div className="px-4 sm:px-6 lg:px-10 xl:px-20 max-w-[1200px] mx-auto relative">
+                <h2 className="text-3xl md:text-4xl font-bold text-cream text-center mb-8 tracking-wide font-mont">
                     Featured Categories
                 </h2>
 

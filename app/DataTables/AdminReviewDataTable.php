@@ -31,7 +31,8 @@ class AdminReviewDataTable extends DataTable
                 return $query->product->name;
             })
             ->addColumn('user', function ($query) {
-                return $query->user->name ?? 'N/A';
+                    return optional($query->user)->name ?? 'N/A';
+                // return $query->user->name ?? 'N/A';
             })
             ->addColumn('status', function ($query) {
                 if ($query->status == 1) {
@@ -58,7 +59,7 @@ class AdminReviewDataTable extends DataTable
      */
     public function query(ProductReview $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->with(['user', 'product']);
     }
 
     /**

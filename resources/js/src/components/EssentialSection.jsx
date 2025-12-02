@@ -8,8 +8,8 @@ const EssentialSection = () => {
     const { data, error, isLoading } = useGetProductsByTypeQuery();
 
     return (
-        <div className="pt-[19px] lg:pt-[125px] pb-[33px] lg:pb-[100px] bg-dark2 ">
-            <div className="px-[18px]  lg:px-20 container mx-auto">
+        <div className="pt-[19px] lg:pt-10 pb-[33px] lg:pb-[30px] bg-dark2 ">
+            <div className="px-[18px]  lg:px-20 max-w-[1200px] mx-auto">
                 <div className="mb-5">
                     <SectionTitle
                         smallTitle="Featured Products"

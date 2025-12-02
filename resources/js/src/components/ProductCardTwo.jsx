@@ -117,7 +117,7 @@ const ProductCardTwo = ({ product }) => {
 
             {/* Product Info */}
             <div className="px-2 mt-2">
-                <h4 className="text-cream text-[12px] xl:text-[18px] font-normal md:font-semibold font-mont mb-2.5">
+                <h4 className="text-cream text-[12px] xl:text-[14px] font-normal md:font-semibold font-mont mb-2.5">
                     <Link
                         to={`/product-details/${product?.slug}`}
                         className="font-mont"

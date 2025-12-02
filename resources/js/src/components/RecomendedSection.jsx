@@ -9,7 +9,7 @@ const RecomendedSection = () => {
 
     return (
         <div className="pt-[19px] pb-[33px] lg:pt-[125px] lg:pb-[100px] bg-dark2 ">
-            <div className="px-[18px]   lg:px-20  container mx-auto">
+            <div className="px-[18px]   lg:px-20  max-w-[1200px] mx-auto">
                 <div className="mb-5">
                     <SectionTitle
                         smallTitle="Best Products"

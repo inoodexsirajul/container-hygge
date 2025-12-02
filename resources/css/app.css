@@ -66,7 +66,7 @@
     --container-md: 720px;
     --container-lg: 960px;
     --container-xl: 1140px;
-    --container-2xl: 1750px;
+    /* --container-2xl: 1750px; */
     /* --container-3xl: 1750px; */
 
     /* Adding custom font families */
@@ -155,6 +155,7 @@ a {
 @media only screen and (min-width: 1401px) {
     .custom-order-banner {
         background-color: #28261e;
+        /* background-image: url("../assets/custom/custom_order_section.png"); */
         background-image: url("/build/assets/custom_order_section.png");
         background-position: top left;
         background-size: contain;
@@ -164,6 +165,7 @@ a {
 @media only screen and (min-width: 1200px) and (max-width: 1400px) {
     .custom-order-banner {
         background-color: #28261e;
+        /* background-image: url("assets/custom_order_section.png"); */
         background-image: url("/build/assets/custom_order_section.png");
         background-position: top left;
         background-size: 70% 75%;
