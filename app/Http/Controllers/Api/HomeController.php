@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Size;
+use App\Models\GeneralSetting;
 use App\Models\Product;
 use App\Models\Slider;
 use App\Models\LogoSetting;
@@ -102,6 +103,12 @@ class HomeController extends Controller
     public function logos(){
         $logo=LogoSetting::select('id','logo', 'favicon', )->get();
         return response()->json(['logo'=>$logo]);
+    }
+
+
+    public function settings(){
+        $settings=GeneralSetting::select('id', 'site_name', 'contact_email', 'contact_phone', 'contact_address', 'currency_name', 'currency_icon', 'time_zone', 'map')->first();
+        return response()->json(['settings'=>$settings]);
     }
 
 }

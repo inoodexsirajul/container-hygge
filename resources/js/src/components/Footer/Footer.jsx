@@ -102,8 +102,8 @@ const Footer = () => {
                 isFetching ? "opacity-90" : "opacity-100"
             }`}
         >
-            <div className="px-6 xl:px-20 container  mx-auto ">
-                <div className="grid grid-cols-1 md:grid-cols-6 gap-8">
+            <div className="px-6 xl:px-20 max-w-[1200px]  mx-auto ">
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
                     {/* Company Info */}
                     <div className="col-span-2">
                         <h2 className="text-3xl mb-3 text-red font-mont">
@@ -125,7 +125,7 @@ const Footer = () => {
                                 {footer_info.phone}
                             </a>
                         </p>
-                        <p className="text-cream font-mont">
+                        <p className="text-cream font-mont mb-4">
                             Email:{" "}
                             <a
                                 href={`mailto:${footer_info.email}`}
@@ -134,6 +134,25 @@ const Footer = () => {
                                 {footer_info.email}
                             </a>
                         </p>
+                        {/* Social */}
+                        <div className="mt-2">
+                            <div className="flex space-x-5 text-2xl">
+                                {[...footer_social]
+                                    .sort((a, b) => a.serial_no - b.serial_no)
+                                    .map((social) => (
+                                        <a
+                                            key={social.serial_no}
+                                            href={social.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className=" transition transform hover:scale-110"
+                                            aria-label={social.name}
+                                        >
+                                            {getSocialIcon(social.icon)}
+                                        </a>
+                                    ))}
+                            </div>
+                        </div>
                     </div>
 
                     {/* About */}
@@ -225,29 +244,6 @@ const Footer = () => {
                                 </Link>
                             </li>
                         </ul>
-                    </div>
-
-                    {/* Social */}
-                    <div>
-                        <h3 className="text-xl font-bold mb-5 font-mont ">
-                            Follow Us
-                        </h3>
-                        <div className="flex space-x-5 text-2xl">
-                            {[...footer_social]
-                                .sort((a, b) => a.serial_no - b.serial_no)
-                                .map((social) => (
-                                    <a
-                                        key={social.serial_no}
-                                        href={social.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className=" transition transform hover:scale-110"
-                                        aria-label={social.name}
-                                    >
-                                        {getSocialIcon(social.icon)}
-                                    </a>
-                                ))}
-                        </div>
                     </div>
                 </div>
 
