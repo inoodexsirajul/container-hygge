@@ -1,6 +1,10 @@
 import React, { Suspense, lazy, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router";
 import { ToastContainer } from "react-toastify";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/autoplay";
 import "react-toastify/dist/ReactToastify.css";
 
 import Layout from "./components/Layout/Layout";
@@ -13,6 +17,9 @@ import {
     useGetCartDetailsQuery,
 } from "./redux/services/eCommerceApi";
 import LoadingSpinner from "./components/UI/LoadingSpinner";
+import { register } from "swiper/element/bundle";
+// এই লাইনটা একবার কল করলেই সব জায়গায় swiper ব্যবহার করা যাবে
+register();
 
 // ====== Lazy Load All Pages ======
 const Home = lazy(() => import("./pages/Home"));
@@ -50,7 +57,24 @@ const App = () => {
 
     // লোডিং স্টেট — এটাই সব কন্ট্রোল করবে
     const [showProgress, setShowProgress] = useState(true);
+    useEffect(() => {
+        const hideProgress = () => {
+            setShowProgress(false);
+        };
 
+        // পেজ লোড হলে + lazy load শেষ হলে
+        window.addEventListener("pageloaded", hideProgress);
+        window.addEventListener("load", hideProgress);
+
+        // Suspense fallback থেকে বের হলে
+        const timer = setTimeout(hideProgress, 1500); // সর্বোচ্চ ১.৫ সেকেন্ড
+
+        return () => {
+            window.removeEventListener("pageloaded", hideProgress);
+            window.removeEventListener("load", hideProgress);
+            clearTimeout(timer);
+        };
+    }, [location.pathname]);
     useEffect(() => {
         getSessionId();
     }, []);
@@ -76,11 +100,6 @@ const App = () => {
         window.scrollTo(0, 0);
     }, [location.pathname]);
 
-    useEffect(() => {
-        const hideLoader = () => setShowProgress(false);
-        window.addEventListener("pageloaded", hideLoader);
-        return () => window.removeEventListener("pageloaded", hideLoader);
-    }, []);
     return (
         <>
             {/* শুধু এই একটা লোডার — সব কিছুর জন্য */}
