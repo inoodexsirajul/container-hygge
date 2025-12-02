@@ -1,9 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Hero from "../components/Hero";
-import ProductSection from "../components/ProductSection";
 import RecomendedSection from "../components/RecomendedSection";
 import EssentialSection from "../components/EssentialSection";
-import HotProducts from "../components/HotProducts";
 import CustomOrderBanner from "../components/CustomOrderBanner";
 import {
     useGetCategoryProductsQuery,
@@ -49,6 +47,11 @@ const Home = () => {
     const { data } = useGetProductsByTypeQuery();
     const { data: categoryProducts, isLoading: categoryLoading } =
         useGetCategoryProductsQuery();
+
+    useEffect(() => {
+        // পেজ লোড হলে লোডার বন্ধ
+        window.dispatchEvent(new Event("pageloaded"));
+    }, []);
 
     return (
         <>

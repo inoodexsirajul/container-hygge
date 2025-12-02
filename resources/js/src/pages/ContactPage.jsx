@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdOutlineLocalPhone, MdEmail } from "react-icons/md";
 import {
@@ -126,6 +126,10 @@ const ContactPage = () => {
 
     const { data: contactInfo, isLoading: contactLoading } =
         useGetFooterQuery();
+    useEffect(() => {
+        // পেজ লোড হলে লোডার বন্ধ
+        window.dispatchEvent(new Event("pageloaded"));
+    }, []);
 
     // Skeleton Loading - দুটো API লোডিং হলে দেখাবে
     if (branchLoading || contactLoading) {

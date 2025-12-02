@@ -1,19 +1,20 @@
-import React, { Suspense, lazy, useEffect } from "react";
+import React, { Suspense, lazy, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Layout from "./components/Layout/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
-import LoadingSpinner from "./components/UI/LoadingSpinner"; // তৈরি করতে হবে (নিচে দিলাম)
+
 import { useSyncToken } from "./utils/useSyncToken";
 import { getSessionId } from "./utils/helper";
 import {
     useGetUserProfileQuery,
     useGetCartDetailsQuery,
 } from "./redux/services/eCommerceApi";
+import LoadingSpinner from "./components/UI/LoadingSpinner";
 
-// ====== Lazy Loaded Pages ======
+// ====== Lazy Load All Pages ======
 const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About"));
 const Shop = lazy(() => import("./pages/Shop"));
@@ -47,34 +48,44 @@ const App = () => {
     const location = useLocation();
     const token = useSyncToken();
 
-    // Session ID initialize (একবারই চলবে)
+    // লোডিং স্টেট — এটাই সব কন্ট্রোল করবে
+    const [showProgress, setShowProgress] = useState(true);
+
     useEffect(() => {
         getSessionId();
     }, []);
 
-    // ====== RTK Query Calls (অপটিমাইজড) ======
-    const { isLoading: profileLoading, isFetching: profileFetching } =
-        useGetUserProfileQuery(undefined, {
-            skip: !token,
-            refetchOnMountOrArgChange: false, // এটা না থাকলে প্রতি পেজে কল হয়
-        });
-
-    const { isLoading: cartLoading } = useGetCartDetailsQuery(undefined, {
+    // API লোডিং চেক
+    useGetUserProfileQuery(undefined, {
         skip: !token,
-        refetchOnMountOrArgChange: 30, // 30 সেকেন্ড পর রিফেচ
+        refetchOnMountOrArgChange: false,
     });
 
-    // Scroll to top on route change
+    useGetCartDetailsQuery(undefined, {
+        skip: !token,
+        refetchOnMountOrArgChange: 30,
+    });
+
+    // প্রতিবার রাউট চেঞ্জ হলে লোডার দেখাবে
+    useEffect(() => {
+        setShowProgress(true);
+    }, [location.pathname]);
+
+    // Scroll to top
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [location.pathname]);
 
-    // প্রথম লোডে প্রোফাইল/কার্ট লোডিং হলে ফুল স্ক্রিন লোডার দেখান
-    const isInitialLoading =
-        (token && (profileLoading || cartLoading)) || profileFetching;
-
+    useEffect(() => {
+        const hideLoader = () => setShowProgress(false);
+        window.addEventListener("pageloaded", hideLoader);
+        return () => window.removeEventListener("pageloaded", hideLoader);
+    }, []);
     return (
         <>
+            {/* শুধু এই একটা লোডার — সব কিছুর জন্য */}
+            {showProgress && <LoadingSpinner key={location.pathname} />}
+
             <ToastContainer
                 position="top-center"
                 autoClose={3000}
@@ -86,122 +97,172 @@ const App = () => {
                 theme="dark"
             />
 
-            {isInitialLoading ? (
-                <LoadingSpinner fullScreen />
-            ) : (
-                <Suspense fallback={<LoadingSpinner fullScreen />}>
-                    <Routes>
-                        {/* Public Routes without Layout */}
+            <Suspense
+                fallback={
+                    <>
+                        <LoadingSpinner key="suspense" />
+                        <div style={{ height: "100vh" }} />
+                    </>
+                }
+            >
+                <Routes location={location}>
+                    {/* Public */}
+                    <Route
+                        path="/forgot-password-user"
+                        element={<ForgetPassword />}
+                    />
+                    <Route path="/reset-password" element={<ResetPassword />} />
+                    <Route path="/resend-email" element={<ResendEmail />} />
+                    <Route path="/verify-email-f" element={<VerifyEmail />} />
+
+                    {/* Main Layout */}
+                    <Route path="/" element={<Layout />}>
                         <Route
-                            path="/forgot-password-user"
-                            element={<ForgetPassword />}
+                            index
+                            element={
+                                <Home onLoad={() => setShowProgress(false)} />
+                            }
                         />
                         <Route
-                            path="/reset-password"
-                            element={<ResetPassword />}
+                            path="about"
+                            element={
+                                <About onLoad={() => setShowProgress(false)} />
+                            }
                         />
-                        <Route path="/resend-email" element={<ResendEmail />} />
                         <Route
-                            path="/verify-email-f"
-                            element={<VerifyEmail />}
+                            path="shop"
+                            element={
+                                <Shop onLoad={() => setShowProgress(false)} />
+                            }
                         />
-
-                        {/* Main Layout Routes */}
-                        <Route path="/" element={<Layout />}>
-                            {/* Static Pages */}
-                            <Route index element={<Home />} />
-                            <Route path="about" element={<About />} />
-                            <Route path="contact" element={<ContactPage />} />
-                            <Route path="support" element={<SupportPage />} />
-                            <Route path="shipping" element={<ShippingInfo />} />
-                            <Route
-                                path="return-policy"
-                                element={<ReturnsPolicy />}
-                            />
-                            <Route
-                                path="how-to-order"
-                                element={<HowToOrder />}
-                            />
-                            <Route
-                                path="privacy-policy"
-                                element={<PrivacyPolicy />}
-                            />
-                            <Route
-                                path="legal-notice"
-                                element={<LegalNotice />}
-                            />
-                            <Route path="career" element={<Career />} />
-                            <Route
-                                path="customize"
-                                element={<CustomizePage />}
-                            />
-                            <Route
-                                path="terms-and-conditions"
-                                element={<TermsAndCondition />}
-                            />
-                            <Route
-                                path="update-password"
-                                element={<UpdatePassword />}
-                            />
-                            <Route
-                                path="success"
-                                element={<OrderSuccessPage />}
-                            />
-
-                            {/* Shop Routes */}
-                            <Route path="shop" element={<Shop />} />
-                            <Route
-                                path="shop/category/:categorySlug"
-                                element={<Shop />}
-                            />
-                            <Route
-                                path="shop/subcategory/:subSlug"
-                                element={<Shop />}
-                            />
-                            <Route
-                                path="shop/childcategory/:childSlug"
-                                element={<Shop />}
-                            />
-
-                            {/* Dynamic Product Routes */}
-                            <Route
-                                path="product-details/:slug"
-                                element={<ProductDetails />}
-                            />
-                            <Route
-                                path="product/:slug/customize"
-                                element={<CustomizeProduct />}
-                            />
-
-                            {/* Cart & Auth */}
-                            <Route path="cart" element={<CartPage />} />
-                            <Route path="signin" element={<Login />} />
-                            <Route
-                                path="customer-register"
-                                element={<Register />}
-                            />
-
-                            {/* Footer Dynamic Pages */}
-                            <Route path="/:slug" element={<FooterPage />} />
-
-                            {/* Protected Routes */}
-                            <Route element={<ProtectedRoute />}>
-                                <Route
-                                    path="checkout"
-                                    element={<CheckoutPage />}
+                        <Route
+                            path="shop/category/:categorySlug"
+                            element={
+                                <Shop onLoad={() => setShowProgress(false)} />
+                            }
+                        />
+                        <Route
+                            path="shop/subcategory/:subSlug"
+                            element={
+                                <Shop onLoad={() => setShowProgress(false)} />
+                            }
+                        />
+                        <Route
+                            path="shop/childcategory/:childSlug"
+                            element={
+                                <Shop onLoad={() => setShowProgress(false)} />
+                            }
+                        />
+                        <Route
+                            path="product-details/:slug"
+                            element={
+                                <ProductDetails
+                                    onLoad={() => setShowProgress(false)}
                                 />
-                                <Route
-                                    path="profile"
-                                    element={<UserProfile />}
+                            }
+                        />
+                        <Route
+                            path="product/:slug/customize"
+                            element={
+                                <CustomizeProduct
+                                    onLoad={() => setShowProgress(false)}
                                 />
-                            </Route>
+                            }
+                        />
+                        <Route
+                            path="cart"
+                            element={
+                                <CartPage
+                                    onLoad={() => setShowProgress(false)}
+                                />
+                            }
+                        />
+                        <Route
+                            path="contact"
+                            element={
+                                <ContactPage
+                                    onLoad={() => setShowProgress(false)}
+                                />
+                            }
+                        />
+                        <Route
+                            path="signin"
+                            element={
+                                <Login onLoad={() => setShowProgress(false)} />
+                            }
+                        />
+                        <Route
+                            path="customer-register"
+                            element={
+                                <Register
+                                    onLoad={() => setShowProgress(false)}
+                                />
+                            }
+                        />
+                        <Route
+                            path="terms-and-conditions"
+                            element={
+                                <TermsAndCondition
+                                    onLoad={() => setShowProgress(false)}
+                                />
+                            }
+                        />
+                        <Route
+                            path="success"
+                            element={
+                                <OrderSuccessPage
+                                    onLoad={() => setShowProgress(false)}
+                                />
+                            }
+                        />
+                        <Route
+                            path="customize"
+                            element={
+                                <CustomizePage
+                                    onLoad={() => setShowProgress(false)}
+                                />
+                            }
+                        />
+                        <Route
+                            path="/:slug"
+                            element={
+                                <FooterPage
+                                    onLoad={() => setShowProgress(false)}
+                                />
+                            }
+                        />
 
-                            {/* 404 - Last */}
-                            <Route path="*" element={<NotFound />} />
+                        {/* Protected */}
+                        <Route element={<ProtectedRoute />}>
+                            <Route
+                                path="checkout"
+                                element={
+                                    <CheckoutPage
+                                        onLoad={() => setShowProgress(false)}
+                                    />
+                                }
+                            />
+                            <Route
+                                path="profile"
+                                element={
+                                    <UserProfile
+                                        onLoad={() => setShowProgress(false)}
+                                    />
+                                }
+                            />
                         </Route>
-                    </Routes>
-                </Suspense>
-            )}
+
+                        <Route
+                            path="*"
+                            element={
+                                <NotFound
+                                    onLoad={() => setShowProgress(false)}
+                                />
+                            }
+                        />
+                    </Route>
+                </Routes>
+            </Suspense>
         </>
     );
 };

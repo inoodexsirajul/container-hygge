@@ -256,6 +256,11 @@ const Shop = () => {
         return pages;
     };
 
+    useEffect(() => {
+        // পেজ লোড হলে লোডার বন্ধ
+        window.dispatchEvent(new Event("pageloaded"));
+    }, []);
+
     return (
         <div className="bg-dark1  ]">
             <div className="px-4 xl:px-20 max-w-[1200px] mx-auto pb-[140px ">
