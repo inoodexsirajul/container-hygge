@@ -129,15 +129,15 @@ const ProductCardTwo = ({ product }) => {
                     </Link>
                 </h4>
 
-                <div className="flex gap-4">
-                    <p className="text-[12px] xl:text-[18px] text-cream font-mont">
+                <div className="">
+                    <p className="text-[12px] xl:text-[17px] text-cream font-mont">
                         {currency?.settings?.currency_icon}
                         {product?.offer_price
                             ? product?.offer_price
                             : product?.price}
                     </p>
                     {product?.offer_price && (
-                        <p className="text-red line-through decoration-cream text-[12px] xl:text-[18px] font-mont">
+                        <p className="text-red line-through decoration-cream text-[12px] xl:text-[14px] font-mont font-medium">
                             {currency?.settings?.currency_icon}
                             {product?.price}
                         </p>

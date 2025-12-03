@@ -158,11 +158,21 @@ const CustomizeProduct = () => {
     ];
 
     const colorOptions = [
-        { id: "black", name: "Black", value: "black" },
-        { id: "red", name: "Red", value: "red" },
-        { id: "blue", name: "Blue", value: "blue" },
-        { id: "green", name: "Green", value: "green" },
-        { id: "purple", name: "Purple", value: "purple" },
+        { id: "1", value: "#cc0000" },
+        { id: "2", value: "#0025cc" },
+        { id: "3", value: "#2e6417" },
+        { id: "4", value: "#17320b" },
+        { id: "5", value: "#004aad" },
+        { id: "6", value: "#cc007e" },
+        { id: "7", value: "#bc3fde" },
+        { id: "8", value: "#ff751f" },
+        { id: "9", value: "#cc4e00" },
+        { id: "10", value: "#c28e4a" },
+        { id: "11", value: "#744383" },
+        { id: "12", value: "#fb475e" },
+        { id: "13", value: "#ea71e7" },
+        { id: "14", value: "#f0efec" },
+        { id: "15", value: "#000000" },
     ];
 
     // Text Management Functions
