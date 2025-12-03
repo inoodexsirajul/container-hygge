@@ -17,30 +17,37 @@
 @font-face {
     font-family: telegraph;
     src: url(../fonts/telegraph.otf);
+    font-display: swap;
 }
 @font-face {
     font-family: futura;
     src: url(../fonts/UTM_Futuraf.ttf);
+    font-display: swap;
 }
 @font-face {
     font-family: london;
     src: url(../fonts/Loudon-yla5.ttf);
+    font-display: swap;
 }
 @font-face {
     font-family: lovelo;
     src: url(../fonts/LoveloBlack.otf);
+    font-display: swap;
 }
 @font-face {
     font-family: glamour;
     src: url(../fonts/GlamourAbsoluteCondensed.woff2);
+    font-display: swap;
 }
 @font-face {
     font-family: etna;
     src: url(../fonts/etna-free-font.otf);
+    font-display: swap;
 }
 @font-face {
     font-family: copper;
     src: url(../fonts/Copperplate-Gothic-Std-31-AB.ttf);
+    font-display: swap;
 }
 
 @import "tailwindcss";
@@ -70,21 +77,21 @@
     /* --container-3xl: 1750px; */
 
     /* Adding custom font families */
-    --font-anton: "anton", sans-serif;
+    --font-anton: "Anton", sans-serif;
     --font-abril: "Abril Fatface", serif;
     --font-leagueSparton: "League Spartan", sans-serif;
     --font-yesevaOne: "Yeseva One", serif;
     --font-chewy: "Chewy", system-ui;
     --font-quicksand: "Quicksand", sans-serif;
     --font-mont: "Montserrat", sans-serif;
-    --font-telegraph: telegraph, sans-serif;
-    --font-futura: futura, sans-serif;
-    --font-london: london, sans-serif;
-    --font-lovelo: lovelo, sans-serif;
-    --font-lovelo: lovelo, sans-serif;
-    --font-glamour: glamour, sans-serif;
-    --font-etna: etna, sans-serif;
-    --font-copper: copper, sans-serif;
+    --font-telegraph: "telegraph", sans-serif;
+    --font-futura: "futura", sans-serif;
+    --font-london: "london", sans-serif;
+    --font-lovelo: "lovelo", sans-serif;
+    --font-lovelo: "lovelo", sans-serif;
+    --font-glamour: "glamour", sans-serif;
+    --font-etna: "etna", sans-serif;
+    --font-copper: "copper", sans-serif;
 
     /* Adding custom colors */
     --color-red: #e65237;

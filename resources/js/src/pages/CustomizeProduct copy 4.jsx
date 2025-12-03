@@ -85,7 +85,7 @@ const CustomizeProduct = () => {
                     title: "",
                     titleColor: "black",
                     textSize: 18,
-                    fontFamily: "Anton",
+                    fontFamily: "Glamour Absolute Condensed",
                     xAxis: 50,
                     yAxis: 50,
                 },
@@ -105,7 +105,7 @@ const CustomizeProduct = () => {
                     title: "",
                     titleColor: "black",
                     textSize: 18,
-                    fontFamily: "Anton",
+                    fontFamily: "Glamour Absolute Condensed",
                     xAxis: 50,
                     yAxis: 50,
                 },
@@ -143,39 +143,20 @@ const CustomizeProduct = () => {
         transform: "translate(-50%, -50%)",
     };
 
-    // const fontOptions = [
-    //     { id: "glamour", name: "Glamour", value: "glamour" },
-    //     { id: "anton", name: "Anton", value: "anton" },
-    //     { id: "abril", name: "abril", value: "abril" },
-    //     { id: "leagueSparton", name: "league Sparton", value: "leagueSparton" },
-    //     { id: "yesevaOne", name: "Yeseva One", value: "yesevaOne" },
-    //     { id: "chewy", name: "Chewy", value: "chewy" },
-    //     { id: "quicksand", name: "Quicksand", value: "quicksand" },
-    //     { id: "telegraph", name: "Telegraph", value: "telegraph" },
-    //     { id: "futura", name: "Futura", value: "futura" },
-    //     { id: "london", name: "London", value: "london" },
-    //     { id: "lovelo", name: "Lovelo", value: "lovelo" },
-    //     { id: "copper", name: "Copper", value: "copper" },
-    // ];
     const fontOptions = [
-        { id: "glamour", name: "Glamour", value: "glamour" },
-        { id: "anton", name: "Anton", value: "Anton" },
-        { id: "abril", name: "Abril Fatface", value: "Abril Fatface" },
-        {
-            id: "leagueSparton",
-            name: "League Spartan",
-            value: "League Spartan",
-        },
-        { id: "yesevaOne", name: "Yeseva One", value: "Yeseva One" },
-        { id: "chewy", name: "Chewy", value: "Chewy" },
-        { id: "quicksand", name: "Quicksand", value: "Quicksand" },
+        { id: "anton", name: "Anton", value: "anton" },
+        { id: "abril", name: "abril", value: "abril" },
+        { id: "leagueSparton", name: "league Sparton", value: "leagueSparton" },
+        { id: "yesevaOne", name: "Yeseva One", value: "yesevaOne" },
+        { id: "chewy", name: "Chewy", value: "chewy" },
+        { id: "quicksand", name: "Quicksand", value: "quicksand" },
         { id: "telegraph", name: "Telegraph", value: "telegraph" },
         { id: "futura", name: "Futura", value: "futura" },
         { id: "london", name: "London", value: "london" },
         { id: "lovelo", name: "Lovelo", value: "lovelo" },
-        { id: "etna", name: "Etna", value: "etna" },
         { id: "copper", name: "Copper", value: "copper" },
     ];
+
     const colorOptions = [
         { id: "1", value: "#cc0000" },
         { id: "2", value: "#0025cc" },
@@ -201,7 +182,7 @@ const CustomizeProduct = () => {
             title: "",
             titleColor: "black",
             textSize: 18,
-            fontFamily: "Anton",
+            fontFamily: "Glamour Absolute Condensed",
             xAxis: 50,
             yAxis: 50,
         };
@@ -259,7 +240,6 @@ const CustomizeProduct = () => {
     };
 
     const generateImageForSide = async (side) => {
-        await document.fonts.ready;
         const originalSide = currentSide;
         setCurrentSide(side);
         await new Promise((resolve) => setTimeout(resolve, 100));
@@ -316,7 +296,6 @@ const CustomizeProduct = () => {
         setIsUpdating(true);
 
         try {
-            await document.fonts.ready;
             const isFrontCustomized =
                 designs.front.texts.some((t) => t.title.trim()) ||
                 designs.front.uploadedImage;
@@ -448,7 +427,6 @@ const CustomizeProduct = () => {
 
     const handleDownload = async () => {
         if (!previewRef.current) return;
-        await document.fonts.ready;
         let originalClassName = textContainerRef.current?.className || "";
         try {
             if (textContainerRef.current) {
@@ -480,8 +458,7 @@ const CustomizeProduct = () => {
         setImageLoadError(null);
     };
 
-    const openPreview = async () => {
-        await document.fonts.ready;
+    const openPreview = () => {
         if (!data?.product?.customization?.[currentSide + "_image"]) {
             toast.error(`No ${currentSide} image available.`);
             return;
@@ -1397,14 +1374,13 @@ const CustomizeProduct = () => {
                                         (textItem) =>
                                             textItem.title && (
                                                 <p
-                                                    // font-${textItem.fontFamily}
                                                     key={textItem.id}
-                                                    className={`absolute wrap-word font-bold text-center w-full `}
+                                                    className={`absolute wrap-word font-bold text-center w-full font-${textItem.fontFamily}`}
                                                     style={{
                                                         fontSize: `${textItem.textSize}px`,
                                                         color: textItem.titleColor,
-                                                        fontFamily:
-                                                            textItem.fontFamily,
+                                                        // fontFamily:
+                                                        //     textItem.fontFamily,
                                                         left: `${textItem.xAxis}%`,
                                                         top: `${textItem.yAxis}%`,
                                                         transform:
