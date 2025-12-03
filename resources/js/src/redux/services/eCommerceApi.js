@@ -21,24 +21,8 @@ export const eCommerceApi = createApi({
             headers.set("Accept", "application/json");
             return headers;
         },
-        // Send token if logged in, otherwise session_id for guest
-        // prepareHeaders: (headers) => {
-        //     const token = localStorage.getItem("authToken");
-        //     const sessionId = getSessionId();
-
-        //     if (token) {
-        //         headers.set("authorization", `Bearer ${token}`);
-        //     } else {
-        //         headers.set("X-Session-ID", sessionId);
-        //     }
-
-        //     headers.set("Accept", "application/json");
-        //     headers.set("X-Requested-With", "XMLHttpRequest");
-        //     return headers;
-        // },
     }),
 
-    // keepUnusedDataFor: 5 * 60,
     tagTypes: [
         "Cart",
         "Products",
@@ -56,6 +40,7 @@ export const eCommerceApi = createApi({
         "Sliders",
         "Colors",
         "Sizes",
+        "Currency",
     ],
 
     endpoints: (builder) => ({
@@ -93,22 +78,6 @@ export const eCommerceApi = createApi({
                 }
             },
         }),
-        // logout: builder.mutation({
-        //     query: () => ({
-        //         url: "/logout",
-        //         method: "POST",
-        //     }),
-        //     invalidatesTags: ["Cart", "UserProfile"],
-        //     async onQueryStarted(arg, { queryFulfilled }) {
-        //         try {
-        //             await queryFulfilled;
-        //             localStorage.removeItem("authToken");
-        //             // Cart already invalidated via invalidatesTags
-        //         } catch (err) {
-        //             console.error("Logout API failed:", err);
-        //         }
-        //     },
-        // }),
 
         updateProfile: builder.mutation({
             query: (profileData) => ({
@@ -158,6 +127,11 @@ export const eCommerceApi = createApi({
         getSlider: builder.query({
             query: () => "/home/sliders",
             providesTags: ["Sliders"],
+        }),
+        getCurrency: builder.query({
+            query: () => "/home/site-setting",
+            providesTags: ["Currency"],
+            keepUnusedDataFor: Infinity,
         }),
 
         // Removed duplicate getHomeCategory → reuse getCategories
@@ -486,4 +460,5 @@ export const {
     useUpdateCartQuantityMutation,
     useUpdatePasswordMutation,
     useUpdateProfileMutation,
+    useGetCurrencyQuery,
 } = eCommerceApi;

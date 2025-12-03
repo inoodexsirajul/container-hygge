@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import {
     useAddToCartMutation,
     useGetCartDetailsQuery,
+    useGetCurrencyQuery,
 } from "../redux/services/eCommerceApi";
 import { toast } from "react-toastify";
 // import baseurl from "../utils/url";
@@ -13,6 +14,8 @@ const ProductCardTwo = ({ product }) => {
     const [isHovered, setIsHovered] = useState(false);
     const [addToCart, { isLoading }] = useAddToCartMutation();
     const { refetch } = useGetCartDetailsQuery();
+    const { data: currency } = useGetCurrencyQuery();
+    console.log(currency?.settings?.currency_icon);
 
     const token = localStorage.getItem("authToken");
 
@@ -128,14 +131,15 @@ const ProductCardTwo = ({ product }) => {
 
                 <div className="flex gap-4">
                     <p className="text-[12px] xl:text-[18px] text-cream font-mont">
-                        $
+                        {currency?.settings?.currency_icon}
                         {product?.offer_price
                             ? product?.offer_price
                             : product?.price}
                     </p>
                     {product?.offer_price && (
                         <p className="text-red line-through decoration-cream text-[12px] xl:text-[18px] font-mont">
-                            ${product?.price}
+                            {currency?.settings?.currency_icon}
+                            {product?.price}
                         </p>
                     )}
                 </div>

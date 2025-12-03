@@ -19,6 +19,7 @@ import {
     useAddToCartMutation,
     useGetCartDetailsQuery,
     useRemoveFromCartMutation,
+    useGetCurrencyQuery,
 } from "../redux/services/eCommerceApi";
 
 const ProductDetails = () => {
@@ -42,6 +43,7 @@ const ProductDetails = () => {
     const { data, isLoading, error } = useGetProductDetailsQuery(slug);
     const [addReview, { isLoading: isReviewSubmitting, error: reviewError }] =
         useAddReviewMutation();
+    const { data: currency } = useGetCurrencyQuery();
     const [addToCart, { isLoading: isCartLoading, error: cartError }] =
         useAddToCartMutation();
     const { data: cartData } = useGetCartDetailsQuery();
@@ -349,14 +351,16 @@ const ProductDetails = () => {
                             <div className="flex gap-[30px] xl:gap-[60px] items-center mb-4">
                                 {/*  totalPrice */}
                                 <p className="text-xl text-cream font-bold font-mont">
-                                    ${totalPrice}
+                                    {currency?.settings?.currency_icon}
+                                    {totalPrice}
                                 </p>
 
                                 {/* line through */}
                                 {product.offer_price &&
                                     !isNaN(Number(product.offer_price)) && (
                                         <p className="text-xl text-gray-500 line-through font-mont">
-                                            ${Number(product.price)}
+                                            {currency?.settings?.currency_icon}
+                                            {Number(product.price)}
                                         </p>
                                     )}
                             </div>

@@ -6,6 +6,7 @@ import {
     useRemoveFromCartMutation,
     useUpdateCartQuantityMutation,
     eCommerceApi,
+    useGetCurrencyQuery,
 } from "../redux/services/eCommerceApi";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -15,6 +16,7 @@ const CartPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const token = localStorage.getItem("authToken");
+    const { data: currency } = useGetCurrencyQuery();
 
     const {
         data: cartSummery,
@@ -295,13 +297,22 @@ const CartPage = () => {
                                                                 }
                                                             </h3>
                                                             <p className="text-sm md:text-lg font-bold text-gray mt-1">
-                                                                $
+                                                                {
+                                                                    currency
+                                                                        ?.settings
+                                                                        ?.currency_icon
+                                                                }
                                                                 {Number(
                                                                     item.price
                                                                 )}
                                                             </p>
                                                             <p className="text-sm font-bold text-gray mt-1">
-                                                                Extra Price $
+                                                                Extra Price
+                                                                {
+                                                                    currency
+                                                                        ?.settings
+                                                                        ?.currency_icon
+                                                                }
                                                                 {Number(
                                                                     item.extra_price
                                                                 )}
@@ -405,7 +416,11 @@ const CartPage = () => {
                                                         {/* Total */}
                                                         <div className="mt-2 sm:mt-0">
                                                             <p className="text-lg font-bold text-cream">
-                                                                $
+                                                                {
+                                                                    currency
+                                                                        ?.settings
+                                                                        ?.currency_icon
+                                                                }
                                                                 {Number(
                                                                     item.price
                                                                 ) *
@@ -435,7 +450,8 @@ const CartPage = () => {
                                             Subtotal
                                         </span>
                                         <span className="font-medium text-cream">
-                                            ${cartSummery?.data?.sub_total || 0}
+                                            {currency?.settings?.currency_icon}
+                                            {cartSummery?.data?.sub_total || 0}
                                         </span>
                                     </div>
                                     <div className="flex justify-between mb-4">
@@ -443,7 +459,7 @@ const CartPage = () => {
                                             Discount
                                         </span>
                                         <span className="font-medium text-green-600">
-                                            -$
+                                            -{currency?.settings?.currency_icon}
                                             {Number(
                                                 cartSummery?.data?.discount || 0
                                             )}
@@ -454,7 +470,8 @@ const CartPage = () => {
                                             Total
                                         </span>
                                         <span className="text-cream">
-                                            ${cartSummery?.data?.sub_total || 0}
+                                            {currency?.settings?.currency_icon}
+                                            {cartSummery?.data?.sub_total || 0}
                                         </span>
                                     </div>
 
