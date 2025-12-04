@@ -90,11 +90,14 @@ const CustomizeProduct = () => {
                     yAxis: 50,
                 },
             ],
+
             uploadedImage: null,
             imagePosition: "below",
             imageXAxis: 50,
             imageYAxis: 30,
             imageSize: 50,
+            containerWidth: 240, // নতুন
+            containerHeight: 240,
             containerXAxis: 50,
             containerYAxis: 50,
         },
@@ -115,6 +118,8 @@ const CustomizeProduct = () => {
             imageXAxis: 50,
             imageYAxis: 30,
             imageSize: 50,
+            containerWidth: 240, // নতুন
+            containerHeight: 240,
             containerXAxis: 50,
             containerYAxis: 50,
         },
@@ -136,27 +141,18 @@ const CustomizeProduct = () => {
     };
 
     const containerStyle = {
-        width: containerSizes.width,
-        height: containerSizes.height,
+        position: "absolute",
+        width: `${currentDesign.containerWidth}px`,
+        height: `${currentDesign.containerHeight}px`,
         left: `${currentDesign.containerXAxis}%`,
         top: `${currentDesign.containerYAxis}%`,
         transform: "translate(-50%, -50%)",
+
+        overflow: "hidden",
+        pointerEvents: "none",
+        zIndex: 5,
     };
 
-    // const fontOptions = [
-    //     { id: "glamour", name: "Glamour", value: "glamour" },
-    //     { id: "anton", name: "Anton", value: "anton" },
-    //     { id: "abril", name: "abril", value: "abril" },
-    //     { id: "leagueSparton", name: "league Sparton", value: "leagueSparton" },
-    //     { id: "yesevaOne", name: "Yeseva One", value: "yesevaOne" },
-    //     { id: "chewy", name: "Chewy", value: "chewy" },
-    //     { id: "quicksand", name: "Quicksand", value: "quicksand" },
-    //     { id: "telegraph", name: "Telegraph", value: "telegraph" },
-    //     { id: "futura", name: "Futura", value: "futura" },
-    //     { id: "london", name: "London", value: "london" },
-    //     { id: "lovelo", name: "Lovelo", value: "lovelo" },
-    //     { id: "copper", name: "Copper", value: "copper" },
-    // ];
     const fontOptions = [
         { id: "glamour", name: "Glamour", value: "glamour" },
         { id: "anton", name: "Anton", value: "Anton" },
@@ -384,10 +380,14 @@ const CustomizeProduct = () => {
                     }))
                 ),
                 container_front: JSON.stringify({
+                    width: designs.front.containerWidth,
+                    height: designs.front.containerHeight,
                     x_position: `${designs.front.containerXAxis}%`,
                     y_position: `${designs.front.containerYAxis}%`,
                 }),
                 container_back: JSON.stringify({
+                    width: designs.front.containerWidth,
+                    height: designs.front.containerHeight,
                     x_position: `${designs.back.containerXAxis}%`,
                     y_position: `${designs.back.containerYAxis}%`,
                 }),
@@ -598,112 +598,6 @@ const CustomizeProduct = () => {
             <div className="w-full 2xl:max-w-4/5 mx-auto bg-dark2 rounded-xl overflow-hidden">
                 {/* মূল গ্রিড */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-4 lg:p-6 min-h-screen md:items-start">
-                    {/* মোবাইলে প্রিভিউ উপরে */}
-                    <div className="md:hidden order-1">
-                        <div className="bg-dark1/50 p-6 rounded-xl shadow-2xl">
-                            <div className=" z-20    ">
-                                <div className="flex justify-between items-center gap-4">
-                                    {/* Front / Back Switch */}
-                                    <div className="flex   rounded-xl p-1 border border-white/20 mb-2">
-                                        {["front", "back"].map((side) => (
-                                            <button
-                                                key={side}
-                                                onClick={() => toggleSide(side)}
-                                                className={`px-2 py-1 rounded-lg font-bold text-sm transition-all duration-300 cursor-pointer ${
-                                                    currentSide === side
-                                                        ? "bg-linear-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/50"
-                                                        : "text-gray-300 hover:text-white hover:bg-white/10"
-                                                }`}
-                                            >
-                                                {side.charAt(0).toUpperCase() +
-                                                    side.slice(1)}
-                                            </button>
-                                        ))}
-                                    </div>
-
-                                    {/* Preview & Download Icons */}
-                                    <div className="flex gap-3">
-                                        <button
-                                            onClick={openPreview}
-                                            className="py-1 px-5 bg-white/10 cursor-pointer hover:bg-white/20 backdrop-blur-md rounded-xl transition-all hover:scale-110"
-                                            title="Full Preview"
-                                        >
-                                            <FaEye
-                                                className="w-6 h-6 text-white"
-                                                cursor-pointer
-                                            />
-                                        </button>
-                                        <button
-                                            onClick={handleDownload}
-                                            className="py-1 px-5 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-xl transition-all hover:scale-110"
-                                            title="Download PNG"
-                                        >
-                                            <MdOutlineFileDownload className="w-6 h-6 text-white" />
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <figure
-                                ref={previewRef}
-                                className="relative w-full max-w-lg mx-auto"
-                            >
-                                <img
-                                    src={`/${
-                                        data.product.customization[
-                                            currentSide + "_image"
-                                        ]
-                                    }`}
-                                    alt={`${currentSide} view`}
-                                    className="w-full h-auto object-contain rounded-lg"
-                                    crossOrigin="anonymous"
-                                />
-                                <div
-                                    ref={textContainerRef}
-                                    className="absolute inset-0 flex items-center justify-center border-2 border-dotted border-white/50 rounded-xl overflow-hidden pointer-events-none"
-                                    style={containerStyle}
-                                >
-                                    {currentDesign.uploadedImage && (
-                                        <img
-                                            src={currentDesign.uploadedImage}
-                                            alt="Sticker"
-                                            className="absolute object-contain pointer-events-none"
-                                            style={imagePositionStyle}
-                                        />
-                                    )}
-                                    {currentDesign.texts.map(
-                                        (textItem) =>
-                                            textItem.title && (
-                                                <p
-                                                    key={textItem.id}
-                                                    className="absolute font-bold text-center pointer-events-none select-none"
-                                                    style={{
-                                                        fontSize: `${textItem.textSize}px`,
-                                                        color: textItem.titleColor,
-                                                        fontFamily:
-                                                            textItem.fontFamily,
-                                                        left: `${textItem.xAxis}%`,
-                                                        top: `${textItem.yAxis}%`,
-                                                        transform:
-                                                            "translate(-50%, -50%)",
-                                                        zIndex:
-                                                            currentDesign.imagePosition ===
-                                                            "below"
-                                                                ? 10
-                                                                : 1,
-                                                        whiteSpace: "pre-wrap",
-                                                        maxWidth: "90%",
-                                                    }}
-                                                >
-                                                    {textItem.title}
-                                                </p>
-                                            )
-                                    )}
-                                </div>
-                            </figure>
-                        </div>
-                    </div>
-
                     {/* Left: Form — শুধু এটার স্ক্রল হবে */}
                     <div className="order-2 md:order-1 bg-dark1 p-4 rounded-lg shadow-md md:max-h-screen md:overflow-y-auto">
                         {/* ট্যাব */}
@@ -1118,16 +1012,111 @@ const CustomizeProduct = () => {
                         )}
 
                         {/* Container Tab */}
+                        {/* Container Tab */}
                         {activeTab === "container" && (
-                            <div>
-                                <div className="mb-3">
-                                    <label className="block text-sm font-semibold text-cream mb-2">
-                                        Container Position
-                                    </label>
-                                    <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-8">
+                                <div className="bg-gray-800/60 border border-gray-700 rounded-xl p-6">
+                                    <h3 className="text-lg font-bold text-cream mb-6 text-center">
+                                        Design Area Size & Position
+                                    </h3>
+
+                                    {/* Width Control */}
+                                    <div className="mb-8">
+                                        <div className="flex justify-between items-center mb-3">
+                                            <label className="text-sm font-medium text-gray-300">
+                                                Width:{" "}
+                                                <span className="text-cream font-bold">
+                                                    {
+                                                        currentDesign.containerWidth
+                                                    }
+                                                    px
+                                                </span>
+                                            </label>
+                                            <span className="text-xs text-gray-500">
+                                                140px - 400px
+                                            </span>
+                                        </div>
+                                        <input
+                                            type="range"
+                                            min="140"
+                                            max="400"
+                                            step="10"
+                                            value={currentDesign.containerWidth}
+                                            onChange={(e) =>
+                                                updateDesign({
+                                                    containerWidth:
+                                                        +e.target.value,
+                                                })
+                                            }
+                                            className="w-full h-3 bg-gray-700 rounded-lg appearance-none cursor-pointer slider-accent"
+                                            style={{
+                                                background: `linear-gradient(to right, #d946ef ${
+                                                    ((currentDesign.containerWidth -
+                                                        140) /
+                                                        260) *
+                                                    100
+                                                }%, #374151 ${
+                                                    ((currentDesign.containerWidth -
+                                                        140) /
+                                                        260) *
+                                                    100
+                                                }%)`,
+                                            }}
+                                        />
+                                    </div>
+
+                                    {/* Height Control */}
+                                    <div className="mb-8">
+                                        <div className="flex justify-between items-center mb-3">
+                                            <label className="text-sm font-medium text-gray-300">
+                                                Height:{" "}
+                                                <span className="text-cream font-bold">
+                                                    {
+                                                        currentDesign.containerHeight
+                                                    }
+                                                    px
+                                                </span>
+                                            </label>
+                                            <span className="text-xs text-gray-500">
+                                                140px - 400px
+                                            </span>
+                                        </div>
+                                        <input
+                                            type="range"
+                                            min="140"
+                                            max="400"
+                                            step="10"
+                                            value={
+                                                currentDesign.containerHeight
+                                            }
+                                            onChange={(e) =>
+                                                updateDesign({
+                                                    containerHeight:
+                                                        +e.target.value,
+                                                })
+                                            }
+                                            className="w-full h-3 bg-gray-700 rounded-lg appearance-none cursor-pointer slider-accent"
+                                            style={{
+                                                background: `linear-gradient(to right, #d946ef ${
+                                                    ((currentDesign.containerHeight -
+                                                        140) /
+                                                        260) *
+                                                    100
+                                                }%, #374151 ${
+                                                    ((currentDesign.containerHeight -
+                                                        140) /
+                                                        260) *
+                                                    100
+                                                }%)`,
+                                            }}
+                                        />
+                                    </div>
+
+                                    {/* Position Controls */}
+                                    <div className="grid grid-cols-2 gap-6 mt-8">
                                         <div>
-                                            <label className="block text-xs font-medium text-cream/70 mb-1">
-                                                Container X-Axis:{" "}
+                                            <label className="block text-sm text-gray-300 mb-2">
+                                                X Position:{" "}
                                                 {currentDesign.containerXAxis}%
                                             </label>
                                             <input
@@ -1140,17 +1129,15 @@ const CustomizeProduct = () => {
                                                 onChange={(e) =>
                                                     updateDesign({
                                                         containerXAxis:
-                                                            parseInt(
-                                                                e.target.value
-                                                            ),
+                                                            +e.target.value,
                                                     })
                                                 }
-                                                className="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                                className="w-full h-2 bg-gray-700 rounded-lg cursor-pointer accent-purple-500"
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-medium text-cream/70 mb-1">
-                                                Container Y-Axis:{" "}
+                                            <label className="block text-sm text-gray-300 mb-2">
+                                                Y Position:{" "}
                                                 {currentDesign.containerYAxis}%
                                             </label>
                                             <input
@@ -1163,15 +1150,28 @@ const CustomizeProduct = () => {
                                                 onChange={(e) =>
                                                     updateDesign({
                                                         containerYAxis:
-                                                            parseInt(
-                                                                e.target.value
-                                                            ),
+                                                            +e.target.value,
                                                     })
                                                 }
-                                                className="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                                className="w-full h-2 bg-gray-700 rounded-lg cursor-pointer accent-purple-500"
                                             />
                                         </div>
                                     </div>
+
+                                    {/* Reset Button */}
+                                    <button
+                                        onClick={() =>
+                                            updateDesign({
+                                                containerWidth: 240,
+                                                containerHeight: 240,
+                                                containerXAxis: 50,
+                                                containerYAxis: 50,
+                                            })
+                                        }
+                                        className="w-full mt-6 py-3 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-lg transition"
+                                    >
+                                        Reset to Default (240×240)
+                                    </button>
                                 </div>
                             </div>
                         )}
@@ -1223,7 +1223,7 @@ const CustomizeProduct = () => {
                     </div>
 
                     {/* Right: Preview (Desktop) — Sticky */}
-                    <div className="hidden md:flex order-2 flex-col items-start  justify-start sticky top-1 z-10">
+                    <div className=" flex order-1 md:order-2 flex-col items-start  justify-start sticky top-1 z-10">
                         <div className=" z-20   p-4">
                             <div className="flex justify-between items-center gap-4">
                                 {/* Front / Back Switch */}

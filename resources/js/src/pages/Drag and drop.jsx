@@ -6,6 +6,16 @@ import { MdOutlineFileDownload } from "react-icons/md";
 import { toast } from "react-toastify";
 import { FaEye } from "react-icons/fa";
 import {
+    DndContext,
+    closestCenter,
+    useSensor,
+    useSensors,
+    PointerSensor,
+    TouchSensor,
+} from "@dnd-kit/core";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import {
     useGetProductDetailsQuery,
     useProductCustomizeMutation,
     useAddToCartMutation,
@@ -37,11 +47,138 @@ const customStyles = {
     },
 };
 
+const DraggableResizableText = ({
+    textItem,
+    updateText,
+    isSelected,
+    transform,
+    onSelect,
+}) => {
+    const { attributes, listeners, setNodeRef, isDragging } = useSortable({
+        id: textItem.id,
+    });
+
+    return (
+        <div
+            ref={setNodeRef}
+            style={{
+                transform: CSS.Transform.toString(transform),
+                position: "absolute",
+                left: `${textItem.xAxis}%`,
+                top: `${textItem.yAxis}%`,
+                transform: "translate(-50%, -50%)",
+                fontSize: `${textItem.textSize}px`,
+                color: textItem.titleColor,
+                fontFamily: textItem.fontFamily,
+                fontWeight: "bold",
+                opacity: isDragging ? 0.7 : 1,
+                zIndex: isDragging ? 1000 : isSelected ? 500 : 10,
+                cursor: "move",
+                userSelect: "none",
+                padding: "8px 16px",
+                border: isSelected
+                    ? "3px dashed #a855f7"
+                    : "2px solid transparent",
+                borderRadius: "12px",
+                background: isSelected
+                    ? "rgba(168, 85, 247, 0.2)"
+                    : "transparent",
+                boxShadow: isSelected
+                    ? "0 0 20px rgba(168, 85, 247, 0.5)"
+                    : "none",
+                transition: isDragging ? "none" : "all 0.2s ease", // ড্র্যাগের সময় ঝাঁকুনি বন্ধ
+            }}
+            {...attributes}
+            {...listeners} // এটা দিলে ড্র্যাগ হবে
+            onClick={(e) => {
+                e.stopPropagation();
+                onSelect(textItem.id);
+            }}
+            className="text-center select-none"
+        >
+            {textItem.title || "Click to edit"}
+
+            {/* Resize Handle */}
+            {isSelected && (
+                <div
+                    className="absolute -bottom-3 -right-3 w-8 h-8 bg-purple-600 rounded-full border-4 border-white shadow-xl cursor-se-resize z-10"
+                    onMouseDown={(e) => {
+                        e.stopPropagation();
+                        const startX = e.clientX;
+                        const startY = e.clientY;
+                        const startSize = textItem.textSize;
+
+                        const onMove = (e) => {
+                            const delta = Math.max(
+                                e.clientX - startX,
+                                e.clientY - startY
+                            );
+                            const newSize = Math.max(
+                                12,
+                                Math.min(140, startSize + delta / 3)
+                            );
+                            updateText(textItem.id, {
+                                textSize: Math.round(newSize),
+                            });
+                        };
+
+                        const onUp = () => {
+                            document.removeEventListener("mousemove", onMove);
+                            document.removeEventListener("mouseup", onUp);
+                        };
+
+                        document.addEventListener("mousemove", onMove);
+                        document.addEventListener("mouseup", onUp);
+                    }}
+                />
+            )}
+        </div>
+    );
+};
 const CustomizeProduct = () => {
     const { slug } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
+    const [selectedTextId, setSelectedTextId] = useState(null);
+
+    const sensors = useSensors(
+        useSensor(PointerSensor, {
+            activationConstraint: { distance: 0, delay: 0 },
+        }),
+        useSensor(TouchSensor, {
+            activationConstraint: { delay: 100, tolerance: 5 },
+        })
+    );
+    const handleDragEnd = (event) => {
+        const { active, over } = event;
+        if (!over || !containerRef.current) return;
+
+        // এই লাইনটা সবচেয়ে গুরুত্বপূর্ণ — delta থেকে নতুন পজিশন বের করো
+        const delta = event.delta; // dnd-kit দেয় x, y চেঞ্জ
+
+        // আগের পজিশন নিয়ে নতুন পজিশন হিসাব করো
+        const oldText = currentDesign.texts.find((t) => t.id === active.id);
+        if (!oldText) return;
+
+        // কন্টেইনারের সাইজ দিয়ে পার্সেন্টেজে কনভার্ট করো
+        const rect = containerRef.current.getBoundingClientRect();
+
+        const deltaXPercent = (delta.x / rect.width) * 100;
+        const deltaYPercent = (delta.y / rect.height) * 100;
+
+        const newXAxis = oldText.xAxis + deltaXPercent;
+        const newYAxis = oldText.yAxis + deltaYPercent;
+
+        // বাউন্ড করো যাতে বাইরে না যায়
+        const boundedX = Math.max(5, Math.min(95, newXAxis));
+        const boundedY = Math.max(5, Math.min(95, newYAxis));
+
+        updateText(active.id, {
+            xAxis: Number(boundedX.toFixed(2)),
+            yAxis: Number(boundedY.toFixed(2)),
+        });
+    };
 
     const [currentSide, setCurrentSide] = useState("front");
     const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -49,15 +186,17 @@ const CustomizeProduct = () => {
     const [isUpdating, setIsUpdating] = useState(false);
     const [imageLoadError, setImageLoadError] = useState(null);
     const [openTextLayers, setOpenTextLayers] = useState({});
+
     const {
         data,
         isLoading,
         error: productError,
     } = useGetProductDetailsQuery(slug);
+
     const [productCustomize, { isLoading: isCustomizeLoading }] =
         useProductCustomizeMutation();
     const [addToCart, { isLoading: isCartLoading }] = useAddToCartMutation();
-    const { data: cartData } = useGetCartDetailsQuery();
+
     const [removeFromCart] = useRemoveFromCartMutation();
 
     const { redo, cartItemId } = location.state || {};
@@ -83,8 +222,8 @@ const CustomizeProduct = () => {
                 {
                     id: Date.now(),
                     title: "",
-                    titleColor: "black",
-                    textSize: 18,
+                    titleColor: "#000000",
+                    textSize: 24,
                     fontFamily: "Anton",
                     xAxis: 50,
                     yAxis: 50,
@@ -95,6 +234,8 @@ const CustomizeProduct = () => {
             imageXAxis: 50,
             imageYAxis: 30,
             imageSize: 50,
+            containerWidth: 300,
+            containerHeight: 300,
             containerXAxis: 50,
             containerYAxis: 50,
         },
@@ -103,8 +244,8 @@ const CustomizeProduct = () => {
                 {
                     id: Date.now() + 1,
                     title: "",
-                    titleColor: "black",
-                    textSize: 18,
+                    titleColor: "#000000",
+                    textSize: 24,
                     fontFamily: "Anton",
                     xAxis: 50,
                     yAxis: 50,
@@ -115,6 +256,8 @@ const CustomizeProduct = () => {
             imageXAxis: 50,
             imageYAxis: 30,
             imageSize: 50,
+            containerWidth: 300,
+            containerHeight: 300,
             containerXAxis: 50,
             containerYAxis: 50,
         },
@@ -123,7 +266,7 @@ const CustomizeProduct = () => {
     const fileInputRef = useRef(null);
     const previewRef = useRef(null);
     const textContainerRef = useRef(null);
-
+    const containerRef = useRef(null);
     const currentDesign = designs[currentSide];
 
     const imagePositionStyle = {
@@ -136,28 +279,18 @@ const CustomizeProduct = () => {
     };
 
     const containerStyle = {
-        width: containerSizes.width,
-        height: containerSizes.height,
-        aspectRatio: "1 / 1",
+        position: "absolute",
+        width: `${currentDesign.containerWidth}px`,
+        height: `${currentDesign.containerHeight}px`,
         left: `${currentDesign.containerXAxis}%`,
         top: `${currentDesign.containerYAxis}%`,
         transform: "translate(-50%, -50%)",
+
+        overflow: "hidden",
+        pointerEvents: "auto",
+        zIndex: 5,
     };
 
-    // const fontOptions = [
-    //     { id: "glamour", name: "Glamour", value: "glamour" },
-    //     { id: "anton", name: "Anton", value: "anton" },
-    //     { id: "abril", name: "abril", value: "abril" },
-    //     { id: "leagueSparton", name: "league Sparton", value: "leagueSparton" },
-    //     { id: "yesevaOne", name: "Yeseva One", value: "yesevaOne" },
-    //     { id: "chewy", name: "Chewy", value: "chewy" },
-    //     { id: "quicksand", name: "Quicksand", value: "quicksand" },
-    //     { id: "telegraph", name: "Telegraph", value: "telegraph" },
-    //     { id: "futura", name: "Futura", value: "futura" },
-    //     { id: "london", name: "London", value: "london" },
-    //     { id: "lovelo", name: "Lovelo", value: "lovelo" },
-    //     { id: "copper", name: "Copper", value: "copper" },
-    // ];
     const fontOptions = [
         { id: "glamour", name: "Glamour", value: "glamour" },
         { id: "anton", name: "Anton", value: "Anton" },
@@ -385,10 +518,14 @@ const CustomizeProduct = () => {
                     }))
                 ),
                 container_front: JSON.stringify({
+                    width: designs.front.containerWidth,
+                    height: designs.front.containerHeight,
                     x_position: `${designs.front.containerXAxis}%`,
                     y_position: `${designs.front.containerYAxis}%`,
                 }),
                 container_back: JSON.stringify({
+                    width: designs.front.containerWidth,
+                    height: designs.front.containerHeight,
                     x_position: `${designs.back.containerXAxis}%`,
                     y_position: `${designs.back.containerYAxis}%`,
                 }),
@@ -1013,16 +1150,111 @@ const CustomizeProduct = () => {
                         )}
 
                         {/* Container Tab */}
+                        {/* Container Tab */}
                         {activeTab === "container" && (
-                            <div>
-                                <div className="mb-3">
-                                    <label className="block text-sm font-semibold text-cream mb-2">
-                                        Container Position
-                                    </label>
-                                    <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-8">
+                                <div className="bg-gray-800/60 border border-gray-700 rounded-xl p-6">
+                                    <h3 className="text-lg font-bold text-cream mb-6 text-center">
+                                        Design Area Size & Position
+                                    </h3>
+
+                                    {/* Width Control */}
+                                    <div className="mb-8">
+                                        <div className="flex justify-between items-center mb-3">
+                                            <label className="text-sm font-medium text-gray-300">
+                                                Width:{" "}
+                                                <span className="text-cream font-bold">
+                                                    {
+                                                        currentDesign.containerWidth
+                                                    }
+                                                    px
+                                                </span>
+                                            </label>
+                                            <span className="text-xs text-gray-500">
+                                                140px - 400px
+                                            </span>
+                                        </div>
+                                        <input
+                                            type="range"
+                                            min="140"
+                                            max="400"
+                                            step="10"
+                                            value={currentDesign.containerWidth}
+                                            onChange={(e) =>
+                                                updateDesign({
+                                                    containerWidth:
+                                                        +e.target.value,
+                                                })
+                                            }
+                                            className="w-full h-3 bg-gray-700 rounded-lg appearance-none cursor-pointer slider-accent"
+                                            style={{
+                                                background: `linear-gradient(to right, #d946ef ${
+                                                    ((currentDesign.containerWidth -
+                                                        140) /
+                                                        260) *
+                                                    100
+                                                }%, #374151 ${
+                                                    ((currentDesign.containerWidth -
+                                                        140) /
+                                                        260) *
+                                                    100
+                                                }%)`,
+                                            }}
+                                        />
+                                    </div>
+
+                                    {/* Height Control */}
+                                    <div className="mb-8">
+                                        <div className="flex justify-between items-center mb-3">
+                                            <label className="text-sm font-medium text-gray-300">
+                                                Height:{" "}
+                                                <span className="text-cream font-bold">
+                                                    {
+                                                        currentDesign.containerHeight
+                                                    }
+                                                    px
+                                                </span>
+                                            </label>
+                                            <span className="text-xs text-gray-500">
+                                                140px - 400px
+                                            </span>
+                                        </div>
+                                        <input
+                                            type="range"
+                                            min="140"
+                                            max="400"
+                                            step="10"
+                                            value={
+                                                currentDesign.containerHeight
+                                            }
+                                            onChange={(e) =>
+                                                updateDesign({
+                                                    containerHeight:
+                                                        +e.target.value,
+                                                })
+                                            }
+                                            className="w-full h-3 bg-gray-700 rounded-lg appearance-none cursor-pointer slider-accent"
+                                            style={{
+                                                background: `linear-gradient(to right, #d946ef ${
+                                                    ((currentDesign.containerHeight -
+                                                        140) /
+                                                        260) *
+                                                    100
+                                                }%, #374151 ${
+                                                    ((currentDesign.containerHeight -
+                                                        140) /
+                                                        260) *
+                                                    100
+                                                }%)`,
+                                            }}
+                                        />
+                                    </div>
+
+                                    {/* Position Controls */}
+                                    <div className="grid grid-cols-2 gap-6 mt-8">
                                         <div>
-                                            <label className="block text-xs font-medium text-cream/70 mb-1">
-                                                Container X-Axis:{" "}
+                                            <label className="block text-sm text-gray-300 mb-2">
+                                                X Position:{" "}
                                                 {currentDesign.containerXAxis}%
                                             </label>
                                             <input
@@ -1035,17 +1267,15 @@ const CustomizeProduct = () => {
                                                 onChange={(e) =>
                                                     updateDesign({
                                                         containerXAxis:
-                                                            parseInt(
-                                                                e.target.value
-                                                            ),
+                                                            +e.target.value,
                                                     })
                                                 }
-                                                className="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                                className="w-full h-2 bg-gray-700 rounded-lg cursor-pointer accent-purple-500"
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-medium text-cream/70 mb-1">
-                                                Container Y-Axis:{" "}
+                                            <label className="block text-sm text-gray-300 mb-2">
+                                                Y Position:{" "}
                                                 {currentDesign.containerYAxis}%
                                             </label>
                                             <input
@@ -1058,15 +1288,28 @@ const CustomizeProduct = () => {
                                                 onChange={(e) =>
                                                     updateDesign({
                                                         containerYAxis:
-                                                            parseInt(
-                                                                e.target.value
-                                                            ),
+                                                            +e.target.value,
                                                     })
                                                 }
-                                                className="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+                                                className="w-full h-2 bg-gray-700 rounded-lg cursor-pointer accent-purple-500"
                                             />
                                         </div>
                                     </div>
+
+                                    {/* Reset Button */}
+                                    <button
+                                        onClick={() =>
+                                            updateDesign({
+                                                containerWidth: 240,
+                                                containerHeight: 240,
+                                                containerXAxis: 50,
+                                                containerYAxis: 50,
+                                            })
+                                        }
+                                        className="w-full mt-6 py-3 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-lg transition"
+                                    >
+                                        Reset to Default (240×240)
+                                    </button>
                                 </div>
                             </div>
                         )}
@@ -1172,61 +1415,67 @@ const CustomizeProduct = () => {
                         ) : (
                             <figure
                                 ref={previewRef}
-                                className="relative w-[700px] max-w-full"
+                                className="relative w-full max-w-2xl mx-auto"
                             >
                                 <img
                                     src={`/${
-                                        data.product.customization[
+                                        data?.product?.customization?.[
                                             currentSide + "_image"
                                         ]
                                     }`}
-                                    alt={`${currentSide} view`}
-                                    className="w-full h-auto object-contain rounded-lg shadow-2xl"
-                                    crossOrigin="anonymous"
+                                    alt={currentSide}
+                                    className="w-full h-auto rounded-2xl shadow-2xl"
                                 />
-                                <div
-                                    ref={textContainerRef}
-                                    className="absolute inset-0 flex items-center justify-center border-2 border-dotted border-white/50 rounded-xl overflow-hidden pointer-events-none"
-                                    style={containerStyle}
+
+                                {/* Design Container */}
+                                <DndContext
+                                    sensors={sensors}
+                                    collisionDetection={closestCenter}
+                                    onDragEnd={handleDragEnd}
                                 >
-                                    {currentDesign.uploadedImage && (
-                                        <img
-                                            src={currentDesign.uploadedImage}
-                                            alt="Sticker"
-                                            className="absolute object-contain pointer-events-none"
-                                            style={imagePositionStyle}
-                                        />
-                                    )}
-                                    {currentDesign.texts.map(
-                                        (textItem) =>
-                                            textItem.title && (
-                                                //font-${textItem?.fontFamily}
-                                                <p
-                                                    key={textItem.id}
-                                                    className={`absolute font-bold text-center pointer-events-none select-none `}
-                                                    style={{
-                                                        fontSize: `${textItem.textSize}px`,
-                                                        color: textItem.titleColor,
-                                                        fontFamily:
-                                                            textItem.fontFamily,
-                                                        left: `${textItem.xAxis}%`,
-                                                        top: `${textItem.yAxis}%`,
-                                                        transform:
-                                                            "translate(-50%, -50%)",
-                                                        zIndex:
-                                                            currentDesign.imagePosition ===
-                                                            "below"
-                                                                ? 10
-                                                                : 1,
-                                                        whiteSpace: "pre-wrap",
-                                                        maxWidth: "90%",
-                                                    }}
-                                                >
-                                                    {textItem.title}
-                                                </p>
-                                            )
-                                    )}
-                                </div>
+                                    <div
+                                        ref={containerRef}
+                                        style={{
+                                            ...containerStyle,
+                                            pointerEvents: "auto", // এটা অবশ্যই auto থাকতে হবে!
+                                            border: "3px dashed rgba(255,255,255,0.3)",
+                                            background:
+                                                "rgba(255,255,255,0.05)",
+                                            borderRadius: "16px",
+                                        }}
+                                        className="absolute inset-0 flex items-center justify-center overflow-hidden"
+                                    >
+                                        {/* ইমেজ থাকলে */}
+                                        {currentDesign.uploadedImage && (
+                                            <img
+                                                src={
+                                                    currentDesign.uploadedImage
+                                                }
+                                                alt="Sticker"
+                                                style={imagePositionStyle}
+                                                className="absolute object-contain pointer-events-none z-10"
+                                            />
+                                        )}
+
+                                        {/* সব টেক্সট এখানে */}
+                                        {currentDesign.texts.map((textItem) => (
+                                            <DraggableResizableText
+                                                key={textItem.id}
+                                                textItem={textItem}
+                                                updateText={updateText}
+                                                isSelected={
+                                                    selectedTextId ===
+                                                    textItem.id
+                                                }
+                                                onPointerDown={(e) => {
+                                                    e.stopPropagation();
+                                                    onSelect(textItem.id); // ক্লিক করলেই সিলেক্ট
+                                                }}
+                                                onSelect={setSelectedTextId}
+                                            />
+                                        ))}
+                                    </div>
+                                </DndContext>
                             </figure>
                         )}
                     </div>
