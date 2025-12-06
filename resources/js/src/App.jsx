@@ -55,19 +55,16 @@ const App = () => {
     const location = useLocation();
     const token = useSyncToken();
 
-    // লোডিং স্টেট — এটাই সব কন্ট্রোল করবে
     const [showProgress, setShowProgress] = useState(true);
     useEffect(() => {
         const hideProgress = () => {
             setShowProgress(false);
         };
 
-        // পেজ লোড হলে + lazy load শেষ হলে
         window.addEventListener("pageloaded", hideProgress);
         window.addEventListener("load", hideProgress);
 
-        // Suspense fallback থেকে বের হলে
-        const timer = setTimeout(hideProgress, 1500); // সর্বোচ্চ ১.৫ সেকেন্ড
+        const timer = setTimeout(hideProgress, 1500);
 
         return () => {
             window.removeEventListener("pageloaded", hideProgress);
@@ -79,7 +76,6 @@ const App = () => {
         getSessionId();
     }, []);
 
-    // API লোডিং চেক
     useGetUserProfileQuery(undefined, {
         skip: !token,
         refetchOnMountOrArgChange: false,
@@ -90,7 +86,7 @@ const App = () => {
         refetchOnMountOrArgChange: 30,
     });
 
-    // প্রতিবার রাউট চেঞ্জ হলে লোডার দেখাবে
+    // loader show on navigate
     useEffect(() => {
         setShowProgress(true);
     }, [location.pathname]);
@@ -102,7 +98,7 @@ const App = () => {
 
     return (
         <>
-            {/* শুধু এই একটা লোডার — সব কিছুর জন্য */}
+            {/* progress loader */}
             {showProgress && <LoadingSpinner key={location.pathname} />}
 
             <ToastContainer
@@ -226,6 +222,69 @@ const App = () => {
                                 />
                             }
                         />
+
+                        <Route
+                            path="shipping"
+                            element={
+                                <ShippingInfo
+                                    onLoad={() => setShowProgress(false)}
+                                />
+                            }
+                        />
+                        <Route
+                            path="how-to-order"
+                            element={
+                                <HowToOrder
+                                    onLoad={() => setShowProgress(false)}
+                                />
+                            }
+                        />
+                        <Route
+                            path="return-policy"
+                            element={
+                                <ReturnsPolicy
+                                    onLoad={() => setShowProgress(false)}
+                                />
+                            }
+                        />
+                        <Route
+                            path="privacy-policy"
+                            element={
+                                <PrivacyPolicy
+                                    onLoad={() => setShowProgress(false)}
+                                />
+                            }
+                        />
+                        <Route
+                            path="legal-notice"
+                            element={
+                                <LegalNotice
+                                    onLoad={() => setShowProgress(false)}
+                                />
+                            }
+                        />
+                        <Route
+                            path="shipping"
+                            element={
+                                <ShippingInfo
+                                    onLoad={() => setShowProgress(false)}
+                                />
+                            }
+                        />
+                        <Route
+                            path="support"
+                            element={
+                                <SupportPage
+                                    onLoad={() => setShowProgress(false)}
+                                />
+                            }
+                        />
+                        <Route
+                            path="career"
+                            element={
+                                <Career onLoad={() => setShowProgress(false)} />
+                            }
+                        />
                         <Route
                             path="success"
                             element={
@@ -242,15 +301,14 @@ const App = () => {
                                 />
                             }
                         />
-                        <Route
+                        {/* <Route
                             path="/:slug"
                             element={
                                 <FooterPage
                                     onLoad={() => setShowProgress(false)}
                                 />
                             }
-                        />
-
+                        /> */}
                         {/* Protected */}
                         <Route element={<ProtectedRoute />}>
                             <Route
@@ -270,7 +328,6 @@ const App = () => {
                                 }
                             />
                         </Route>
-
                         <Route
                             path="*"
                             element={

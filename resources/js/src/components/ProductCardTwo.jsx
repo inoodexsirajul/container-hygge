@@ -125,7 +125,7 @@ const ProductCardTwo = ({ product }) => {
                         to={`/product-details/${product?.slug}`}
                         className="font-mont"
                     >
-                        {product?.name}
+                        {product?.name.slice(0, 14)}..
                     </Link>
                 </h4>
 

@@ -248,10 +248,10 @@ const Footer = () => {
                 </div>
 
                 {/* Copyright */}
-                <div className="mt-10 pt-6 border-t border-cream/70 text-center">
+                <div className="mt-10 pt-6 border-t border-cream/70 text-center flex flex-row justify-between">
+                    <p className="text-cream">Ideation & Design Shahadat</p>
+                    <p className="text-cream">{footer_info.copyright}</p>
                     <p className="text-cream">
-                        {footer_info.copyright}
-                        <FaHeart className="inline text-red-500 mx-1 animate-pulse" />
                         Developed By
                         <Link
                             to="https://inoodex.com"
