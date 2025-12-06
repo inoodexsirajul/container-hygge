@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrderConfirmedMail;
 use App\Models\Cart;
 use App\Models\CodSetting;
 use App\Models\GeneralSetting;
@@ -21,6 +22,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use illuminate\Support\Str;
 
@@ -483,6 +485,11 @@ class PaymentController extends Controller
         ]);
 
         Cart::where('user_id', Auth::id())->delete();
+
+        //  Send email
+        if (Auth::user() && Auth::user()->email) {
+            Mail::to(Auth::user()->email)->send(new OrderConfirmedMail($order));
+        }
 
         return $order;
     }
