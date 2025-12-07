@@ -123,9 +123,9 @@ const ProductCardTwo = ({ product }) => {
                 <h4 className="text-cream text-[12px] xl:text-[14px] font-normal md:font-semibold font-mont mb-2.5">
                     <Link
                         to={`/product-details/${product?.slug}`}
-                        className="font-mont"
+                        className="font-mont truncate"
                     >
-                        {product?.name.slice(0, 14)}..
+                        {product?.name}
                     </Link>
                 </h4>
 

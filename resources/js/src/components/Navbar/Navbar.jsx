@@ -371,9 +371,10 @@ const Navbar = () => {
                             <li>
                                 <div
                                     className="flex items-center font-mont justify-between text-cream py-3 px-4 rounded-lg hover:bg-nav-gradient cursor-pointer"
-                                    onClick={() =>
-                                        setMobileShopOpen(!mobileShopOpen)
-                                    }
+                                    onClick={() => {
+                                        setMobileShopOpen(!mobileShopOpen);
+                                        navigate("/shop");
+                                    }}
                                 >
                                     <span>SHOP</span>
                                     <FaChevronDown

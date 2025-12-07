@@ -431,7 +431,7 @@ input:-webkit-autofill:active {
 /* Arrow আইকনের কালার */
 .my-swiper-hero .swiper-button-next:after,
 .my-swiper-hero .swiper-button-prev:after {
-    font-size: 14px !important;
+    font-size: 12px !important;
     font-weight: bold;
     color: white !important;
 }

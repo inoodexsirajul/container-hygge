@@ -2,11 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router";
 import { useGetCategoriesQuery } from "../redux/services/eCommerceApi";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation } from "swiper/modules"; // Navigation যোগ করলাম
+import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/navigation"; // এই লাইনটা যোগ করো
+import "swiper/css/navigation";
 
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa"; // react-icons
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const CategorySkeleton = () => (
     <div className="group cursor-pointer transform transition-all duration-300 mt-8">
@@ -54,25 +54,25 @@ const FeaturedCategory = () => {
         // px-[18px] pt-[19px] lg:pt-[125px] pb-[33px] lg:pb-[100px] lg:px-20
         <div className=" bg-dark2 pt-[30px]  ">
             <div className="px-4 sm:px-6 lg:px-10 xl:px-20 max-w-[1200px] mx-auto relative">
-                <h2 className="text-3xl md:text-4xl font-bold text-cream text-center mb-8 tracking-wide font-mont">
+                <h2 className="text-3xl md:text-4xl font-bold text-cream text-center mb-4 tracking-wide font-mont">
                     Featured Categories
                 </h2>
 
                 {/* Arrows - left*/}
-                <div className="hidden lg:flex absolute inset-y-0 left-20 items-center -ml-10 z-10">
+                <div className=" flex absolute inset-y-0 left-20 items-center -ml-10 z-10">
                     <button className="cursor-pointer featured-prev-btn w-12 h-12 bg-red/30 hover:bg-red/60 backdrop-blur-sm border border-red/50 rounded-full flex items-center justify-center text-cream shadow-2xl hover:shadow-red/50 transition-all duration-300">
                         <FaChevronLeft size={24} />
                     </button>
                 </div>
                 {/* Arrows - right  */}
-                <div className="hidden lg:flex absolute inset-y-0 right-20 items-center -mr-10 z-10">
+                <div className="flex absolute inset-y-0 right-20 items-center -mr-10 z-10">
                     <button className="cursor-pointer featured-next-btn w-12 h-12 bg-red/30 hover:bg-red/60 backdrop-blur-sm border border-red/50 rounded-full flex items-center justify-center text-cream shadow-2xl hover:shadow-red/50 transition-all duration-300">
                         <FaChevronRight size={24} />
                     </button>
                 </div>
 
                 <Swiper
-                    modules={[Autoplay, Navigation]} // Navigation যোগ করলাম
+                    modules={[Autoplay, Navigation]}
                     spaceBetween={24}
                     slidesPerView={2}
                     autoplay={{ delay: 4000, disableOnInteraction: false }}
