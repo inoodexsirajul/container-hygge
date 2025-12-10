@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 const Navbar = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const mobileMenuRef = useRef(null);
     const [isSticky, setSticky] = useState(false);
     const [showSearchbar, setShowSearchbar] = useState(false);
     const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -65,6 +66,26 @@ const Navbar = () => {
         return () =>
             document.removeEventListener("mousedown", handleClickOutside);
     }, []);
+    useEffect(() => {
+        const handleClickOutsideMobileMenu = (event) => {
+            if (
+                showMobileMenu &&
+                mobileMenuRef.current &&
+                !mobileMenuRef.current.contains(event.target)
+            ) {
+                setShowMobileMenu(false);
+                setMobileShopOpen(false); // অপশনাল: SHOP submenu ও বন্ধ করে দিবে
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutsideMobileMenu);
+        return () => {
+            document.removeEventListener(
+                "mousedown",
+                handleClickOutsideMobileMenu
+            );
+        };
+    }, [showMobileMenu]);
 
     const toggleSearch = () => setShowSearchbar(!showSearchbar);
     const toggleProfileDropdown = () =>
@@ -363,6 +384,7 @@ const Navbar = () => {
                 {/* Mobile Menu */}
                 {showMobileMenu && (
                     <div
+                        ref={mobileMenuRef}
                         className={`lg:hidden fixed ${
                             isSticky ? "top-14" : "top-[72px]"
                         } left-0 right-0 bg-dark2 shadow-lg z-40 max-h-[80vh] overflow-y-auto`}

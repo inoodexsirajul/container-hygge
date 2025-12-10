@@ -248,7 +248,7 @@ const Footer = () => {
                 </div>
 
                 {/* Copyright */}
-                <div className="mt-10 pt-6 border-t border-cream/70 text-center flex flex-row justify-between">
+                <div className="mt-10 pt-6 border-t border-cream/70 text-center flex flex-col space-y-2 xl:space-y-0 xl:flex-row justify-between">
                     <p className="text-cream">Ideation & Design Shahadat</p>
                     <p className="text-cream">{footer_info.copyright}</p>
                     <p className="text-cream">

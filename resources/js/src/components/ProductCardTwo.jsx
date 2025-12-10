@@ -7,7 +7,6 @@ import {
     useGetCurrencyQuery,
 } from "../redux/services/eCommerceApi";
 import { toast } from "react-toastify";
-// import baseurl from "../utils/url";
 
 const ProductCardTwo = ({ product }) => {
     const [quantity, setQuantity] = useState(1);
@@ -15,11 +14,9 @@ const ProductCardTwo = ({ product }) => {
     const [addToCart, { isLoading }] = useAddToCartMutation();
     const { refetch } = useGetCartDetailsQuery();
     const { data: currency } = useGetCurrencyQuery();
-    console.log(currency?.settings?.currency_icon);
 
     const token = localStorage.getItem("authToken");
 
-    // এখানে চেক করো প্রোডাক্ট স্টকে আছে কি না
     const isOutOfStock = !product.qty || product.qty <= 0;
     const hasOptions =
         product?.colors?.length > 0 || product?.sizes?.length > 0;
@@ -29,7 +26,7 @@ const ProductCardTwo = ({ product }) => {
             toast.error("This product is out of stock!");
             return;
         }
-        // বাকি কোড same...
+
         try {
             const cartItem = { product_id: product.id, qty: quantity };
             await addToCart(cartItem).unwrap();
@@ -42,7 +39,7 @@ const ProductCardTwo = ({ product }) => {
 
     return (
         <div className="w-full  mx-auto transition-all duration-500 overflow-hidden hover:-translate-y-1 relative">
-            {/* Out of Stock Badge - সবসময় দেখাবে যদি স্টক না থাকে */}
+            {/* Out of Stock Badge  */}
             {isOutOfStock && (
                 <div className="absolute top-3 left-3 z-10 bg-red text-cream text-xs font-mont font-semibold px-3 py-1 rounded-full shadow-lg">
                     Out of Stock
