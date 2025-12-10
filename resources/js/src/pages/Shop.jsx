@@ -257,7 +257,6 @@ const Shop = () => {
     };
 
     useEffect(() => {
-        // পেজ লোড হলে লোডার বন্ধ
         window.dispatchEvent(new Event("pageloaded"));
     }, []);
 
@@ -491,32 +490,41 @@ const Shop = () => {
 
                     {/* Main Content */}
                     <div className="w-full xl:w-4/5">
-                        <button
-                            onClick={() => setFilter(true)}
-                            className="xl:hidden fixed bottom-4 left-4 bg-dark2 text-cream px-5 py-3 rounded-full shadow-2xl z-30 flex items-center gap-2"
-                        >
-                            <RiSoundModuleLine /> Filter
-                        </button>
-
-                        <div className="px-4 pb-6 flex flex-wrap justify-between items-center gap-4">
-                            <p className="text-cream">
-                                Showing {products.length} of {totalProducts}{" "}
-                                products
-                            </p>
-                            <select
-                                value={sortBy}
-                                onChange={(e) =>
-                                    handleSortChange(e.target.value)
-                                }
-                                className="bg-dark2 text-cream px-4 py-2 rounded"
+                        <div className="flex">
+                            <div className="px-4 pb-6 flex flex-wrap justify-between items-center gap-4">
+                                <p className="text-cream">
+                                    Showing {products.length} of {totalProducts}{" "}
+                                    products
+                                </p>
+                                <select
+                                    value={sortBy}
+                                    onChange={(e) =>
+                                        handleSortChange(e.target.value)
+                                    }
+                                    className="bg-dark2 text-cream px-4 py-2 rounded"
+                                >
+                                    <option value="">Default</option>
+                                    <option value="latest">Latest</option>
+                                    <option value="featureproduct">
+                                        Featured
+                                    </option>
+                                    <option value="lowtohigh">
+                                        Low to High
+                                    </option>
+                                    <option value="hightolow">
+                                        High to Low
+                                    </option>
+                                    <option value="recommended">
+                                        Recommended
+                                    </option>
+                                </select>
+                            </div>
+                            <button
+                                onClick={() => setFilter(true)}
+                                className="xl:hidden     text-cream px-5 py-1    shadow-2xl z-30  flex items-center gap-2"
                             >
-                                <option value="">Default</option>
-                                <option value="latest">Latest</option>
-                                <option value="featureproduct">Featured</option>
-                                <option value="lowtohigh">Low to High</option>
-                                <option value="hightolow">High to Low</option>
-                                <option value="recommended">Recommended</option>
-                            </select>
+                                <RiSoundModuleLine /> Filter
+                            </button>
                         </div>
 
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4 px-4 xl:px-0">

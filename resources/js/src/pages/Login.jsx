@@ -38,7 +38,7 @@ const Login = () => {
             resetForm();
 
             // এখানে ম্যাজিক! কোথা থেকে এসেছে সেখানেই ফিরে যাবে
-            const redirectTo = location.state?.from || "/cart";
+            const redirectTo = location.state?.from || "/";
             navigate(redirectTo);
         } catch (err) {
             reset();
