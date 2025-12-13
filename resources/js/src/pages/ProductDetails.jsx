@@ -519,7 +519,7 @@ const ProductDetails = () => {
                                                             size.size_id
                                                         )
                                                     }
-                                                    className={`relative font-mont w-[30px] xl:w-[45px] h-[30px] xl:h-[45px] rounded-[7px] flex justify-center items-center font-bold text-sm xl:text-[14px] transition-all duration-200 ${
+                                                    className={`relative font-mont   xl:w-auto px-2 h-[30px] xl:h-[45px] rounded-[7px] flex justify-center items-center font-bold text-sm xl:text-[14px] transition-all duration-200 ${
                                                         selectedSizeId ===
                                                         size.size_id
                                                             ? "bg-yellow text-dark2 border-2 border-yellow shadow-md scale-105"
