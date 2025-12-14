@@ -398,7 +398,7 @@ const Navbar = () => {
                                         navigate("/shop");
                                     }}
                                 >
-                                    <span>SHOP</span>
+                                    <span>OUR PRODUCTS</span>
                                     <FaChevronDown
                                         className={`transition-transform ${
                                             mobileShopOpen ? "rotate-180" : ""
