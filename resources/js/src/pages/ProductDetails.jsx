@@ -227,7 +227,7 @@ const ProductDetails = () => {
                     <div className="pt-[5px] grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-[50px] 2xl:gap-[30px]">
                         {/* Image Gallery */}
                         <div className="grid grid-cols-3 gap-2.5 md:gap-5">
-                            {/* Thumbnails - এখন স্লাইড + ক্লিক + সিঙ্ক করবে */}
+                            {/* Thumbnails  */}
                             <div className="overflow-hidden">
                                 <Slider
                                     ref={slider2}
@@ -250,7 +250,7 @@ const ProductDetails = () => {
                                                 <img
                                                     src={`/${img.image}`}
                                                     alt={`thumb ${i}`}
-                                                    className={`w-full h-[140px] xl:h-[200px] object-cover rounded-lg border-2 transition-all duration-300
+                                                    className={`w-full h-[140px] xl:h-[200px] object-cover rounded-lg  2 transition-all duration-300
                            `}
                                                 />
                                             </div>
@@ -399,7 +399,7 @@ const ProductDetails = () => {
                                 </div>
                             </div>
                             {/* colors  */}
-                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-4 xl:gap-8 mb-[60px]">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-4 xl:gap-8 mb-[30px]">
                                 {/* Colors  */}
                                 <div className="w-full">
                                     <h5 className="font-manrope text-[18px] text-cream font-bold mb-[21px] leading-0 font-mont">
@@ -500,46 +500,45 @@ const ProductDetails = () => {
                                         </p>
                                     )}
                                 </div>
-
-                                {/* Sizes */}
-                                <div className="w-full">
-                                    <h5 className="font-manrope text-[18px] text-cream font-bold mb-[21px] leading-0 font-mont">
-                                        Sizes
-                                    </h5>
-                                    {product.sizes?.length > 0 ? (
-                                        <div className="flex flex-wrap gap-[18px]">
-                                            {product.sizes.map((size) => (
-                                                <button
-                                                    type="button"
-                                                    key={size.size_id}
-                                                    disabled={isOutOfStock}
-                                                    onClick={() =>
-                                                        !isOutOfStock &&
-                                                        setSelectedSizeId(
-                                                            size.size_id
-                                                        )
-                                                    }
-                                                    className={`relative font-mont   xl:w-auto px-2 h-[30px] xl:h-[45px] rounded-[7px] flex justify-center items-center font-bold text-sm xl:text-[14px] transition-all duration-200 ${
-                                                        selectedSizeId ===
+                            </div>
+                            {/* Sizes */}
+                            <div className="w-full mb-8">
+                                <h5 className="font-manrope text-[18px] text-cream font-bold mb-[21px] leading-0 font-mont">
+                                    Sizes
+                                </h5>
+                                {product.sizes?.length > 0 ? (
+                                    <div className="flex flex-wrap gap-[18px]">
+                                        {product.sizes.map((size) => (
+                                            <button
+                                                type="button"
+                                                key={size.size_id}
+                                                disabled={isOutOfStock}
+                                                onClick={() =>
+                                                    !isOutOfStock &&
+                                                    setSelectedSizeId(
                                                         size.size_id
-                                                            ? "bg-yellow text-dark2 border-2 border-yellow shadow-md scale-105"
-                                                            : "border-2 border-gray text-cream hover:bg-gray-700"
-                                                    } ${
-                                                        isOutOfStock
-                                                            ? "opacity-60 cursor-not-allowed"
-                                                            : ""
-                                                    }`}
-                                                >
-                                                    {size.size_name.toUpperCase()}
-                                                </button>
-                                            ))}
-                                        </div>
-                                    ) : (
-                                        <p className="text-gray text-[16px] font-mont">
-                                            No sizes available
-                                        </p>
-                                    )}
-                                </div>
+                                                    )
+                                                }
+                                                className={`relative font-mont   xl:w-auto px-2 h-[30px] xl:h-[45px] rounded-[7px] flex justify-center items-center font-bold text-sm xl:text-[14px] transition-all duration-200 ${
+                                                    selectedSizeId ===
+                                                    size.size_id
+                                                        ? "bg-yellow text-dark2 border border-yellow shadow-md scale-105"
+                                                        : "border-2 border-gray text-cream hover:bg-gray-700"
+                                                } ${
+                                                    isOutOfStock
+                                                        ? "opacity-60 cursor-not-allowed"
+                                                        : ""
+                                                }`}
+                                            >
+                                                {size.size_name.toUpperCase()}
+                                            </button>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p className="text-gray text-[16px] font-mont">
+                                        No sizes available
+                                    </p>
+                                )}
                             </div>
                             {/* product quantity         */}
                             <div className="flex flex-col sm:flex-row gap-4 md:gap-[47px]">

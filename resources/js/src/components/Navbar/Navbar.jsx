@@ -74,7 +74,7 @@ const Navbar = () => {
                 !mobileMenuRef.current.contains(event.target)
             ) {
                 setShowMobileMenu(false);
-                setMobileShopOpen(false); // অপশনাল: SHOP submenu ও বন্ধ করে দিবে
+                setMobileShopOpen(false);
             }
         };
 
@@ -396,10 +396,16 @@ const Navbar = () => {
                                     onClick={() => {
                                         setMobileShopOpen(!mobileShopOpen);
                                         navigate("/shop");
+                                        setShowMobileMenu(false);
+                                        setMobileShopOpen(false);
                                     }}
                                 >
                                     <span>OUR PRODUCTS</span>
                                     <FaChevronDown
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setMobileShopOpen(!mobileShopOpen);
+                                        }}
                                         className={`transition-transform ${
                                             mobileShopOpen ? "rotate-180" : ""
                                         }`}
@@ -450,7 +456,7 @@ const Navbar = () => {
                                 )}
                             </li>
 
-                            {["ABOUT", "CONTACT"].map((title) => (
+                            {["ABOUT", "CONTACT", "CUSTOMIZE"].map((title) => (
                                 <li key={title}>
                                     <Link
                                         to={`/${title.toLowerCase()}`}
