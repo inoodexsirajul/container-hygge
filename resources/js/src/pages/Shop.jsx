@@ -5,8 +5,6 @@ import CustomOrderBanner from "../components/CustomOrderBanner";
 import ProductCardTwo from "../components/ProductCardTwo";
 import { IoMdClose } from "react-icons/io";
 import { RiSoundModuleLine } from "react-icons/ri";
-import Slider from "rc-slider";
-import "rc-slider/assets/index.css";
 import {
     useGetProductsQuery,
     useGetHomeCategoriesQuery,
@@ -14,9 +12,14 @@ import {
     useGetColorsQuery,
     useGetSizesQuery, // ← নতুন
 } from "../redux/services/eCommerceApi";
+import { Range, getTrackBackground } from "react-range";
 
 const Shop = () => {
     const [searchParams, setSearchParams] = useSearchParams();
+    const STEP = 10;
+    const MIN = 0;
+    const MAX = 5000;
+    const rtl = false;
 
     // States
     const [activePage, setActivePage] = useState(1);
@@ -477,12 +480,84 @@ const Shop = () => {
                                     <span>${rangeValues[0]}</span>
                                     <span>${rangeValues[1]}</span>
                                 </div>
-                                <Slider
-                                    range
-                                    min={0}
-                                    max={5000}
-                                    value={rangeValues}
-                                    onChange={handleRangeChange}
+
+                                <Range
+                                    values={rangeValues}
+                                    step={STEP}
+                                    min={MIN}
+                                    max={MAX}
+                                    rtl={rtl}
+                                    onChange={(values) =>
+                                        handleRangeChange(values)
+                                    }
+                                    renderTrack={({ props, children }) => (
+                                        <div
+                                            onMouseDown={props.onMouseDown}
+                                            onTouchStart={props.onTouchStart}
+                                            style={{
+                                                ...props.style,
+                                                height: "36px",
+                                                display: "flex",
+                                                width: "100%",
+                                            }}
+                                        >
+                                            <div
+                                                ref={props.ref}
+                                                style={{
+                                                    ...props.style,
+                                                    height: "5px",
+                                                    width: "100%",
+                                                    borderRadius: "4px",
+                                                    background:
+                                                        getTrackBackground({
+                                                            values: rangeValues, // ← এখানে rangeValues ব্যবহার করুন (state থেকে)
+                                                            colors: [
+                                                                "#ccc",
+                                                                "#548BF4",
+                                                                "#ccc",
+                                                            ],
+                                                            min: MIN,
+                                                            max: MAX,
+                                                            rtl,
+                                                        }),
+                                                    alignSelf: "center",
+                                                }}
+                                            >
+                                                {children}
+                                            </div>
+                                        </div>
+                                    )}
+                                    renderThumb={({
+                                        props,
+                                        isDragged,
+                                        index,
+                                    }) => (
+                                        <div
+                                            {...props}
+                                            key={index}
+                                            style={{
+                                                ...props.style,
+                                                height: "10px",
+                                                width: "10px",
+                                                borderRadius: "50%",
+                                                backgroundColor: "#FFF",
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                boxShadow: "0px 2px 6px #AAA",
+                                            }}
+                                        >
+                                            <div
+                                                style={{
+                                                    height: "16px",
+                                                    width: "5px",
+                                                    backgroundColor: isDragged
+                                                        ? "#548BF4"
+                                                        : "#CCC",
+                                                }}
+                                            />
+                                        </div>
+                                    )}
                                 />
                             </div>
                         </div>

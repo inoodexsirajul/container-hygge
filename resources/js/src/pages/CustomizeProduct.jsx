@@ -42,6 +42,10 @@ const CustomizeProduct = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
+    const { selectedColor, selectedSizeId, quantity } = location.state || {};
+    console.log("color", selectedColor);
+    console.log("size", selectedSizeId);
+    console.log("quantity", quantity);
 
     const [currentSide, setCurrentSide] = useState("front");
     const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -427,7 +431,9 @@ const CustomizeProduct = () => {
 
             await addToCart({
                 product_id: data?.product?.id,
-                qty: 1,
+                qty: quantity,
+                size: selectedSizeId || null,
+                color: selectedColor?.id || null,
                 customization_id: customizationId,
                 price,
             }).unwrap();

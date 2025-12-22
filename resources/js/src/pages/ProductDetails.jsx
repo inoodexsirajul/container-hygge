@@ -145,7 +145,18 @@ const ProductDetails = () => {
                 } catch {}
             }
         }
-        navigate(`/product/${slug}/customize`);
+        if (galleryColors.length > 0 && !selectedColor)
+            return toast.error("Please select a color");
+        if (product?.sizes?.length > 0 && !selectedSizeId)
+            return toast.error("Please select a size");
+
+        navigate(`/product/${slug}/customize`, {
+            state: {
+                selectedColor: selectedColor,
+                selectedSizeId: selectedSizeId,
+                quantity: quantity,
+            },
+        });
     };
 
     const handleIncrement = () => {
@@ -540,7 +551,7 @@ const ProductDetails = () => {
                                     </p>
                                 )}
                             </div>
-                            {/* product quantity         */}
+                            {/*  add to cart and customization           */}
                             <div className="flex flex-col sm:flex-row gap-4 md:gap-[47px]">
                                 <button
                                     type="button"
