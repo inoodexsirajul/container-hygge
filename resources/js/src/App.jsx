@@ -18,6 +18,7 @@ import {
 } from "./redux/services/eCommerceApi";
 import LoadingSpinner from "./components/UI/LoadingSpinner";
 import { register } from "swiper/element/bundle";
+import ModalPopup from "./components/UI/ModalPopup";
 // এই লাইনটা একবার কল করলেই সব জায়গায় swiper ব্যবহার করা যাবে
 register();
 
@@ -54,6 +55,7 @@ const CustomizePage = lazy(() => import("./pages/CustomizePage"));
 const App = () => {
     const location = useLocation();
     const token = useSyncToken();
+    const [showModal, setShowModal] = useState(false);
 
     const [showProgress, setShowProgress] = useState(true);
     useEffect(() => {
@@ -96,6 +98,20 @@ const App = () => {
         window.scrollTo(0, 0);
     }, [location.pathname]);
 
+ 
+    useEffect(() => {
+        const hasSeenModal = localStorage.getItem("hasSeenWelcomeModal");
+
+        // if (!hasSeenModal) {
+          
+            const timer = setTimeout(() => {
+                setShowModal(true);
+                // localStorage.setItem("hasSeenWelcomeModal", "true");
+            }, 1000);
+
+            return () => clearTimeout(timer);
+        // }
+    }, []);
     return (
         <>
             {/* progress loader */}
@@ -112,6 +128,10 @@ const App = () => {
                 theme="dark"
             />
 
+            <ModalPopup
+                isOpen={showModal}
+                onClose={() => setShowModal(false)}
+            />
             <Suspense
                 fallback={
                     <>

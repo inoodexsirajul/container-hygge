@@ -548,13 +548,15 @@ class CartController extends Controller
         $cartItems = $this->getCurrentUserCart($user_id, $session_id);
         $cartTotal = $this->calculateCartTotal($cartItems);
         $promotions = $this->applyPromotions($cartItems);
-
+        
         $response = apiResponse('success', 'Product added to cart successfully!', [
             'cart_count' => $cartItems->count(),
             'cart_total' => number_format($cartTotal, 2),
             'cart_item' => $cartItem,
             'promotions' => $promotions,
+            // 'cart_itemsp'=>$cartItems
         ]);
+        $this->applyPromotions($cartItems);
 
         return $cookie ? $response->withCookie($cookie) : $response;
     }
@@ -600,6 +602,7 @@ class CartController extends Controller
 
         $cartTotal = $cartItems->sum('total');
         $promotions = $this->getPromotions($cartItems);
+        $this->applyPromotions();
 
         return apiResponse('success', 'Cart fetched successfully!', [
             'cart_items' => $cartItems->values(),
@@ -722,7 +725,7 @@ class CartController extends Controller
 
         $opt = json_decode($cartItem->options, true);
         $total = ($cartItem->price + ($opt['variant_total'] ?? 0) + ($opt['extra_price'] ?? 0)) * $cartItem->quantity;
-
+        $this->applyPromotions($cartItem);
         return apiResponse('success', 'Cart updated successfully!', [
             'product_total' => number_format($total, 2),
             'cart_item' => $cartItem,
@@ -763,6 +766,7 @@ class CartController extends Controller
         }
 
         $cart->delete();
+        $this->applyPromotions($cart);
 
         return apiResponse('success', 'Cart item removed successfully!');
     }
@@ -797,6 +801,7 @@ class CartController extends Controller
         return $cartItems->sum(
             fn($i) => ($i->price + (json_decode($i->options, true)['variant_total'] ?? 0) + (json_decode($i->options, true)['extra_price'] ?? 0)) * $i->quantity
         );
+        // $this->applyPromotions();
     }
 
     /** Apply promotions & free products */
